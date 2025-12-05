@@ -26,200 +26,154 @@
         </div>
 
         <div class="uml-documentation">
-             <!-- Índice -->
              <nav class="toc">
                 <h2 class="toc-title">Índice</h2>
                 <ul class="toc-list">
                     <li class="toc-item"><a href="#introduccion-uml" class="toc-link">Introducción</a></li>
-                    <li class="toc-item"><a href="#clases-principales" class="toc-link">Clases Principales</a></li>
-                    <li class="toc-item toc-subitem"><a href="#gestion-usuarios" class="toc-link">1. Usuarios y Perfiles</a></li>
-                    <li class="toc-item toc-subitem"><a href="#gestion-contenido" class="toc-link">2. Contenido</a></li>
-                    <li class="toc-item toc-subitem"><a href="#clases-auxiliares" class="toc-link">3. Clases Auxiliares</a></li>
-                    <li class="toc-item toc-subitem"><a href="#clases-interaccion" class="toc-link">4. Interacción Social</a></li>
-                    <li class="toc-item toc-subitem"><a href="#clases-comunicacion" class="toc-link">5. Comunicación</a></li>
+                    <li class="toc-item"><a href="#actores-principales" class="toc-link">1. Actores y Usuarios</a></li>
+                    <li class="toc-item toc-subitem"><a href="#clase-actor" class="toc-link">Clase Base: Actor</a></li>
+                    <li class="toc-item toc-subitem"><a href="#subclases-actor" class="toc-link">Subclases: Usuario, Empresa, Admin</a></li>
+                    <li class="toc-item"><a href="#gestion-comercial" class="toc-link">2. Gestión Comercial</a></li>
+                    <li class="toc-item toc-subitem"><a href="#productos-ofertas" class="toc-link">Productos y Ofertas</a></li>
+                    <li class="toc-item toc-subitem"><a href="#compras-contratos" class="toc-link">Compras y Contratos</a></li>
+                    <li class="toc-item"><a href="#interaccion" class="toc-link">3. Interacción y Mensajería</a></li>
                     <li class="toc-item"><a href="#relaciones" class="toc-link">Relaciones entre Clases</a></li>
                      <li class="toc-item"><a href="#esquema-uml" class="toc-link">Esquema Gráfico</a></li>
                 </ul>
             </nav>
 
             <h3 id="introduccion-uml">Introducción al Modelo de Datos de Nexus</h3>
-            <p>El presente documento detalla la estructura fundamental de la información que la aplicación Nexus gestionará, tal como se representa en el Diagrama de Clases UML a continuación. Este diagrama funciona como el "plano" conceptual de la base de datos y la lógica de negocio, mostrando las entidades clave de la aplicación, los datos que cada una almacena (sus atributos) y cómo se interconectan entre sí (sus relaciones).</p>
-            <p>Entender este modelo es vital para cualquier etapa del desarrollo, desde el diseño técnico hasta la comprensión del comportamiento esperado de la aplicación. Nexus, al combinar ofertas de productos nuevos con un mercado de segunda mano, maneja una amplia variedad de información, incluyendo perfiles de usuario, anuncios de productos, interacciones sociales y sistemas de comunicación.</p>
-            <p>Esta versión del modelo es la más completa y precisa hasta la fecha, reflejando fielmente el diseño del diagrama UML proporcionado. Incorpora identificadores enteros para simplificar, una denominación clara para las ofertas de usuario (<code>OfertaUsuario</code>), una gestión estructurada de los tipos de ofertas administradas, la inclusión de una funcionalidad de <code>ListaFavoritos</code> para la organización personalizada de contenido, y la tipificación de estados de producto mediante un enumerador (<code>ESTADOPRODUCTO</code>).</p>
+            <p>Este documento refleja la estructura de datos actualizada de Nexus. El modelo se centra en una arquitectura de herencia donde todos los participantes del sistema derivan de una clase común <code>Actor</code>, permitiendo una gestión unificada de credenciales mientras se especializan los roles en <code>Usuario</code>, <code>Empresa</code> y <code>Admin</code>. El sistema gestiona tanto la venta directa de productos de segunda mano como la publicación de ofertas externas y contratos publicitarios.</p>
 
-            <h3 id="clases-principales">Clases Principales y sus Atributos</h3>
-            <p>Las clases son los componentes básicos de nuestro sistema, representando los tipos de objetos o conceptos fundamentales que la aplicación necesita gestionar y almacenar.</p>
-
-            <h4 id="gestion-usuarios">1. Gestión de Usuarios y Perfiles</h4>
-            <h5>USUARIO (Clase Base)</h5>
-            <p><strong>Propósito:</strong> Representa a cualquier persona o entidad con una cuenta registrada en la plataforma Nexus. Es la base para cualquier tipo de interacción autenticada.</p>
+            <h3 id="actores-principales">1. Actores y Usuarios</h3>
+            
+            <h4 id="clase-actor">ACTOR (Clase Base)</h4>
+            <p><strong>Propósito:</strong> Clase padre que engloba los atributos comunes para cualquier entidad que acceda al sistema.</p>
             <ul>
-                <li><strong>id: Integer:</strong> Un identificador numérico único para cada usuario.</li>
-                <li><strong>user: String {único}:</strong> El alias público y único que identifica al usuario en la plataforma.</li>
-                <li><strong>email: String {único}:</strong> La dirección de correo electrónico principal del usuario, utilizada para el inicio de sesión y comunicaciones.</li>
-                <li><strong>password: String:</strong> La contraseña cifrada del usuario para acceder a su cuenta.</li>
-                <li><strong>fechaRegistro: DateTime:</strong> La fecha y hora exactas en que el usuario se registró en Nexus.</li>
-                <li><strong>rol: Enum&lt;"Particular", "Empresa_Publicidad", "Admin"&gt;:</strong> Define el tipo de acceso y las funcionalidades que el usuario puede realizar dentro del sistema (ej. un particular para comprar/vender, una empresa para gestionar publicidad, o un administrador del sistema).</li>
+                <li><strong>id: Integer:</strong> Identificador único del actor.</li>
+                <li><strong>user: String:</strong> Nombre de usuario o alias.</li>
+                <li><strong>email: String:</strong> Correo electrónico para autenticación y contacto.</li>
+                <li><strong>password: String:</strong> Contraseña de acceso cifrada.</li>
+                <li><strong>fechaRegistro: DateTime:</strong> Fecha de alta en el sistema.</li>
+                <li><strong>rol: TiposRol:</strong> Define si es Admin, Usuario o Empresa.</li>
             </ul>
-            <p><strong>Funcionalidades (Métodos):</strong> Contiene las operaciones básicas para la interacción con la plataforma, como <code>registrarse(datos)</code>, <code>iniciarSesion(credenciales)</code> o <code>editarPerfil(datos)</code>.</p>
+            <p><strong>Métodos:</strong> <code>registrarse(datos)</code>, <code>iniciarSesion(credenciales)</code>, <code>editarPerfil(datos)</code>.</p>
 
-            <h5>PERFIL</h5>
-            <p><strong>Propósito:</strong> Contiene la información pública y personalizable que un usuario (sea particular o empresa) muestra a la comunidad dentro de la aplicación.</p>
-             <ul>
-                <li><strong>id: Integer:</strong> Identificador numérico único del perfil.</li>
-                <li><strong>esVerificado: Boolean:</strong> Un indicador que muestra si el perfil ha pasado por un proceso de verificación.</li>
-                 <li><strong>fotoPerfil: String (URL):</strong> La dirección web de la imagen de perfil del usuario.</li>
-                <li><strong>biografia: String (opcional):</strong> Un breve texto descriptivo que el usuario puede añadir sobre sí mismo.</li>
-                <li><strong>ubicacion: String (código postal o ciudad):</strong> Ubicación geográfica del usuario, esencial para la funcionalidad de búsqueda de segunda mano local.</li>
-                <li><strong>reputacion: Integer (0-5 estrellas):</strong> Un sistema de valoración (ej. basado en transacciones exitosas, likes recibidos, etc.) para construir la confianza de la comunidad.</li>
-            </ul>
-
-            <h5>PARTICULAR (Subclase de USUARIO)</h5>
-            <p><strong>Propósito:</strong> Representa a un usuario individual. Su principal rol en Nexus es la compra y venta de artículos de segunda mano y la subida de ofertas de productos nuevos.</p>
-            <ul><li><strong>telefono: String (opcional):</strong> Número de teléfono que el particular puede optar por mostrar para facilitar el contacto directo en el contexto de sus anuncios de segunda mano. Hereda todos los atributos y funcionalidades de USUARIO.</li></ul>
-
-            <h5>EMPRESAPUBLICIDAD (Subclase de USUARIO)</h5>
-            <p><strong>Propósito:</strong> Representa a una empresa o marca que colabora con Nexus, principalmente para fines publicitarios o de afiliación. Este tipo de usuario no participa en el mercado de segunda mano.</p>
-             <ul>
-                <li><strong>nombreComercial: String:</strong> El nombre registrado o comercial de la empresa.</li>
-                <li><strong>cif: String {único}:</strong> El Código de Identificación Fiscal de la empresa, único y utilizado para verificación legal y contractual.</li>
-                <li><strong>contactoPrincipal: String:</strong> Nombre de la persona de contacto dentro de la empresa para la gestión con Nexus.</li>
-                <li><strong>emailContacto: String:</strong> Correo electrónico de contacto específico para temas comerciales o de soporte.</li>
-                <li><strong>tipoServicioContratado: Enum&lt;"Publicidad_Banner", "Comision_Afiliacion"&gt;:</strong> Indica el tipo de acuerdo comercial que la empresa tiene con Nexus.</li>
-                <li><strong>fechaContrato: DateTime:</strong> La fecha en que se inició o firmó el acuerdo de colaboración. Hereda todos los atributos y funcionalidades de USUARIO.</li>
+            <h4 id="subclases-actor">Subclases de Actor</h4>
+            
+            <h5>USUARIO (Extiende de Actor)</h5>
+            <p><strong>Propósito:</strong> Representa al usuario particular estándar que interactúa en la plataforma comprando, vendiendo o comentando.</p>
+            <ul>
+                <li><strong>telefono: String:</strong> Número de contacto.</li>
+                <li><strong>esVerificado: Boolean:</strong> Indica si el perfil ha validado su identidad.</li>
+                <li><strong>fotoPerfil: String (URL):</strong> Imagen del usuario.</li>
+                <li><strong>biografia: String:</strong> Descripción personal.</li>
+                <li><strong>ubicacion: String:</strong> Localización geográfica.</li>
+                <li><strong>reputacion: Integer:</strong> Valoración numérica basada en su actividad.</li>
             </ul>
 
-            <h4 id="gestion-contenido">2. Gestión de Contenido (Productos y Ofertas)</h4>
-            <h5>CONTENIDOPUBLICABLE (Clase Abstracta)</h5>
-             <p><strong>Propósito:</strong> Sirve como una base común para cualquier tipo de ítem (ya sea un anuncio de segunda mano o una oferta de usuario) que puede ser publicado en la plataforma y sobre el cual los usuarios pueden interactuar (dar "likes", dejar comentarios). Al ser abstracta, no se pueden crear instancias directamente de CONTENIDOPUBLICABLE.</p>
-             <ul>
-                 <li><strong>id: Integer:</strong> Identificador numérico único para cada pieza de contenido publicable.</li>
-                 <li><strong>titulo: String:</strong> El título principal y descriptivo del contenido.</li>
-                 <li><strong>fechaPublicacion: DateTime:</strong> El momento exacto en que el contenido fue publicado por primera vez.</li>
-                 <li><strong>numLikes: Integer:</strong> El número total de "me gustas" que ha recibido el contenido.</li>
-                 <li><strong>numComentarios: Integer:</strong> El número total de comentarios asociados a este contenido.</li>
-             </ul>
-             <p><strong>Funcionalidades (Métodos):</strong> Incluye operaciones genéricas aplicables a cualquier contenido publicable, como <code>publicar()</code> (hacerlo visible) o <code>eliminar()</code> (retirarlo de la vista).</p>
-
-            <h5>ANUNCIO (Subclase de CONTENIDOPUBLICABLE)</h5>
-            <p><strong>Propósito:</strong> Representa un artículo de segunda mano que un PARTICULAR pone a la venta.</p>
-             <ul>
-                 <li><strong>descripcion: String:</strong> Un texto detallado que describe el producto, sus características y cualquier otra información relevante.</li>
-                 <li><strong>estadoProducto: ENUM_ESTADOPRODUCTO:</strong> Clasificación estandarizada del estado físico del producto (ej. "ComoNuevo", "Usado", "Defectos").</li>
-                 <li><strong>precio: Double:</strong> El precio de venta del artículo en la moneda local.</li>
-                 <li><strong>fechaModificacion: DateTime:</strong> La última vez que se realizó una edición en la información del anuncio.</li>
-                 <li><strong>ubicacion: String:</strong> La zona geográfica o método de entrega preferido por el vendedor.</li>
-                 <li><strong>estaVendido: Boolean:</strong> Un indicador que marca si el artículo ya ha sido vendido. Hereda los atributos y funcionalidades de CONTENIDOPUBLICABLE.</li>
+            <h5>EMPRESA (Extiende de Actor)</h5>
+            <p><strong>Propósito:</strong> Entidad corporativa que utiliza Nexus para establecer contratos publicitarios.</p>
+            <ul>
+                <li><strong>cif: String:</strong> Código de Identificación Fiscal único.</li>
             </ul>
 
-             <h5>OFERTAUSUARIO (Subclase de CONTENIDOPUBLICABLE)</h5>
-             <p><strong>Propósito:</strong> Representa una oferta o descuento en un producto nuevo, encontrada y compartida por un PARTICULAR.</p>
-             <ul>
-                 <li><strong>urlOferta: String:</strong> Un enlace directo a la página de la tienda online donde se puede encontrar la oferta.</li>
-                 <li><strong>tienda: String:</strong> El nombre de la tienda online (ej. Amazon, MediaMarkt) donde está disponible la oferta.</li>
-                 <li><strong>precioOriginal: Double (opcional):</strong> El precio del producto antes de aplicar el descuento, si está disponible.</li>
-                 <li><strong>precioOferta: Double:</strong> El precio actual del producto con la oferta aplicada.</li>
-                 <li><strong>fechaExpira: DateTime (opcional):</strong> La fecha límite en la que la oferta se espera que finalice. Hereda los atributos y funcionalidades de CONTENIDOPUBLICABLE.</li>
-             </ul>
+            <h5>ADMIN (Extiende de Actor)</h5>
+            <p><strong>Propósito:</strong> Administrador del sistema con permisos elevados.</p>
+            <ul>
+                <li><strong>nivelAcceso: Integer:</strong> Grado de privilegios dentro del panel de administración.</li>
+            </ul>
 
-            <h5>OFERTA_ADMINISTRADOR</h5>
-             <p><strong>Propósito:</strong> Contenido promocional o publicitario directamente gestionado por el equipo de Nexus o por empresas colaboradoras, que se muestra en lugares destacados de la aplicación (ej. banners, ofertas patrocinadas). Este contenido no es generado por los usuarios.</p>
-             <ul>
-                 <li><strong>id: Integer:</strong> Identificador numérico único de la oferta administrada.</li>
-                 <li><strong>titulo: String:</strong> Título principal o eslogan de la oferta.</li>
-                 <li><strong>descripcion: String (HTML):</strong> Contenido más detallado de la oferta, que puede incluir formato enriquecido.</li>
-                 <li><strong>urlDestino: String:</strong> El enlace al que se redirige al usuario al interactuar con la oferta.</li>
-                 <li><strong>fechaInicio: DateTime:</strong> Fecha a partir de la cual la oferta estará visible en la aplicación.</li>
-                 <li><strong>fechaFin: DateTime:</strong> Fecha hasta la cual la oferta se mostrará en la aplicación.</li>
-                 <li><strong>estaActiva: Boolean:</strong> Un indicador que controla si la oferta está actualmente visible y operativa.</li>
-                 <li><strong>tipoOferta: TIPO_OFERTA_ADMIN:</strong> Clasifica cómo se presenta esta oferta administrada.</li>
-             </ul>
+            <h3 id="gestion-comercial">2. Gestión Comercial y Contenido</h3>
 
-             <h5>(ENUM) TIPO_OFERTA_ADMIN</h5>
-             <p><strong>Propósito:</strong> Define los tipos predefinidos para clasificar cómo se presenta una OFERTA_ADMINISTRADOR dentro de la aplicación.</p>
-             <ul><li>Valores: Banner, Destacado_Feed, Patrocinado.</li></ul>
+            <h4 id="productos-ofertas">Productos y Ofertas</h4>
 
-             <h5>(ENUM) ESTADOPRODUCTO</h5>
-             <p><strong>Propósito:</strong> Define los estados predefinidos para clasificar la condición de un producto en un ANUNCIO de segunda mano.</p>
-             <ul><li>Valores: ComoNuevo, Usado, Defectos.</li></ul>
+            <h5>PRODUCTO</h5>
+            <p><strong>Propósito:</strong> Artículo físico puesto a la venta dentro de la plataforma (generalmente segunda mano).</p>
+            <ul>
+                <li><strong>id: Integer:</strong> Identificador único del producto.</li>
+                <li><strong>titulo: String:</strong> Nombre del producto.</li>
+                <li><strong>descripcion: String:</strong> Detalles del artículo.</li>
+                <li><strong>precio: Double:</strong> Coste del producto.</li>
+                <li><strong>tipoOferta: TipoOferta:</strong> Categorización de la oferta.</li>
+                <li><strong>estadoProducto: EstadoProducto (Enum):</strong> Condición actual (<code>DISPONIBLE</code>, <code>RESERVADO</code>, <code>VENDIDO</code>).</li>
+            </ul>
+            <p><strong>Métodos:</strong> <code>publicar()</code>, <code>eliminar()</code>.</p>
 
-            <h4 id="clases-auxiliares">3. Clases Auxiliares para Contenido y Organización</h4>
-             <h5>IMAGEN</h5>
-             <p><strong>Propósito:</strong> Representa una fotografía o imagen asociada específicamente a un ANUNCIO.</p>
-             <ul><li><strong>id: Integer:</strong> Identificador numérico único de la imagen.</li><li><strong>url: String (URL):</strong> La dirección web o ruta donde está alojada la imagen.</li></ul>
+            <h5>OFERTA</h5>
+            <p><strong>Propósito:</strong> Promoción o enlace a un producto externo (ofertas de internet).</p>
+            <ul>
+                <li><strong>urlOferta: String:</strong> Enlace externo a la oferta.</li>
+                <li><strong>tienda: String:</strong> Nombre del comercio (ej. Amazon, PcComponentes).</li>
+                <li><strong>precioOferta: Double:</strong> Precio rebajado.</li>
+                <li><strong>precioOriginal: Double (opcional):</strong> Precio anterior para comparar.</li>
+                <li><strong>fechaExpiracion: DateTime (opcional):</strong> Cuándo caduca la oferta.</li>
+            </ul>
 
-            <h5>CATEGORIA</h5>
-            <p><strong>Propósito:</strong> Permite clasificar y organizar de forma estructurada tanto los ANUNCIO como las OFERTAUSUARIO, mejorando la navegación y la eficiencia de las búsquedas.</p>
-             <ul><li><strong>id: Integer:</strong> Identificador numérico único de la categoría.</li><li><strong>nombre: String {único}:</strong> El nombre de la categoría (ej. "Electrónica", "Moda", "Hogar"), único en la plataforma.</li><li><strong>icono: String (URL):</strong> La dirección web de un icono gráfico que representa visualmente la categoría.</li></ul>
+            <h4 id="compras-contratos">Compras y Contratos</h4>
 
-            <h4 id="clases-interaccion">4. Clases de Interacción Social</h4>
-            <h5>COMENTARIO</h5>
-            <p><strong>Propósito:</strong> Representa una interacción textual de un usuario, expresando una opinión o pregunta sobre un CONTENIDOPUBLICABLE.</p>
-            <ul><li><strong>id: Integer:</strong> Identificador numérico único del comentario.</li><li><strong>texto: String:</strong> El contenido textual del comentario.</li><li><strong>fecha: DateTime:</strong> La fecha y hora exactas en que se publicó el comentario.</li><li><strong>esReportado: Boolean:</strong> Un indicador que señala si el comentario ha sido reportado por algún usuario como inapropiado.</li></ul>
-             <p><strong>Funcionalidades (Métodos):</strong> Contiene la lógica para <code>reportar()</code> el comentario.</p>
+            <h5>COMPRA</h5>
+            <p><strong>Propósito:</strong> Registro de una transacción realizada por un Usuario sobre un Producto.</p>
+            <ul>
+                <li><strong>precioFinal: Double:</strong> Precio al que se cerró la transacción.</li>
+                <li><strong>fechaCompra: Date:</strong> Fecha de la operación.</li>
+                <li><strong>estadoCompra: EstadoCompra (Enum):</strong> Situación de la transacción (<code>ACEPTADO</code>, <code>PENDIENTE</code>, <code>RECHAZADO</code>).</li>
+            </ul>
 
-            <h5>LIKE</h5>
-            <p><strong>Propósito:</strong> Representa la acción de "me gusta" de un usuario sobre un CONTENIDOPUBLICABLE. Es una forma simple de interacción y de medir la popularidad.</p>
-            <ul><li><strong>id: Integer:</strong> Identificador numérico único del "me gusta".</li><li><strong>fecha: DateTime:</strong> La fecha y hora exactas en que se dio el "me gusta".</li></ul>
+            <h5>CONTRATO</h5>
+            <p><strong>Propósito:</strong> Acuerdo comercial entre una Empresa y Nexus.</p>
+            <ul>
+                <li><strong>id: Integer:</strong> Identificador del contrato.</li>
+                <li><strong>tipoContrato: TipoContrato (Enum):</strong> Modalidad del servicio (<code>BANNER</code>, <code>PUBLICACION</code>).</li>
+            </ul>
 
-            <h5>LISTAFAVORITOS</h5>
-            <p><strong>Propósito:</strong> Permite a los usuarios crear colecciones personalizadas de CONTENIDOPUBLICABLE que les interesan. Es la funcionalidad de "guardar para después" o "mis listas".</p>
-            <ul><li><strong>id: Integer:</strong> Identificador numérico único de la lista.</li><li><strong>nombre: String:</strong> El nombre que el usuario le da a su lista (ej. "Regalos de Navidad", "Proyectos Bricolaje").</li><li><strong>fechaCreacion: DateTime:</strong> El momento en que el usuario creó la lista.</li><li><strong>esPublica: Boolean:</strong> Un indicador que permite al usuario decidir si su lista es privada o visible para otros perfiles.</li></ul>
-            <p><strong>Funcionalidades (Métodos):</strong> Contiene la lógica para <code>añadirContenido(contenido)</code>, <code>eliminarContenido(contenido)</code> y <code>exportar(formato)</code>.</p>
-
-            <h4 id="clases-comunicacion">5. Clases de Comunicación</h4>
-             <h5>CHAT</h5>
-             <p><strong>Propósito:</strong> Representa una conversación privada y directa entre dos PERFILES dentro de la plataforma, principalmente utilizada para negociar sobre ANUNCIO.</p>
-             <ul><li><strong>id: Integer:</strong> Identificador numérico único del chat.</li><li><strong>fechaCreacion: DateTime:</strong> La fecha y hora en que se inició la conversación.</li><li><strong>estaActivo: Boolean:</strong> Indica si el chat sigue en uso o si ha sido archivado/cerrado.</li></ul>
+            <h3 id="interaccion">3. Interacción y Mensajería</h3>
 
             <h5>MENSAJE</h5>
-             <p><strong>Propósito:</strong> Representa cada uno de los mensajes individuales enviados dentro de un CHAT.</p>
-             <ul><li><strong>id: Integer:</strong> Identificador numérico único del mensaje.</li><li><strong>texto: String:</strong> El contenido textual del mensaje.</li><li><strong>fechaEnvio: DateTime:</strong> La fecha y hora exactas en que se envió el mensaje.</li><li><strong>leido: Boolean:</strong> Un indicador que muestra si el destinatario ha leído el mensaje.</li></ul>
+            <p><strong>Propósito:</strong> Comunicación directa escrita por un Usuario.</p>
+            <ul>
+                <li><strong>id: Integer:</strong> Identificador del mensaje.</li>
+                <li><strong>fechaCreacion: DateTime:</strong> Marca de tiempo del envío.</li>
+                <li><strong>estaActivo: Boolean:</strong> Estado de visibilidad del mensaje.</li>
+            </ul>
+
+            <h5>COMENTARIO</h5>
+            <p><strong>Propósito:</strong> Opiniones o preguntas públicas realizadas sobre Ofertas.</p>
+            <ul>
+                <li><strong>id: Integer:</strong> Identificador del comentario.</li>
+                <li><strong>texto: String:</strong> Contenido del comentario.</li>
+                <li><strong>fecha: DateTime:</strong> Fecha de publicación.</li>
+                <li><strong>esReportado: Boolean:</strong> Flag de moderación.</li>
+            </ul>
+            <p><strong>Métodos:</strong> <code>reportar()</code>.</p>
 
             <h3 id="relaciones">Relaciones entre Clases (Asociaciones)</h3>
-            <p>Las relaciones definen cómo las instancias de una clase se conectan con las instancias de otras clases, formando la red de información que da vida a la aplicación. La multiplicidad (ej. "1", "*" o ”2”) indica el número de instancias de una clase que pueden estar relacionadas con el número de instancias de otra clase.</p>
-             <h4>1. Relaciones de Usuario y Perfil:</h4>
+             <p>Las conexiones principales definidas en el diagrama son:</p>
              <ul>
-                 <li><strong>USUARIO posee PERFIL (1 a 1):</strong> Cada USUARIO está asociado a un único PERFIL.</li>
-                 <li><strong>Herencia de USUARIO:</strong> PARTICULAR y EMPRESAPUBLICIDAD son tipos de USUARIO.</li>
-                 <li><strong>PERFIL crea ANUNCIO (1 a *):</strong> Un PERFIL puede publicar múltiples ANUNCIO.</li>
-                 <li><strong>PERFIL sube OFERTAUSUARIO (1 a *):</strong> Un PERFIL puede subir múltiples OFERTAUSUARIO.</li>
-                 <li><strong>PERFIL da LIKE (1 a *):</strong> Un PERFIL puede dar múltiples LIKE.</li>
-                 <li><strong>PERFIL escribe COMENTARIO (1 a *):</strong> Un PERFIL puede escribir múltiples COMENTARIO.</li>
-                 <li><strong>PERFIL participa en CHAT (* a 2):</strong> Un PERFIL participa en CHATs; cada CHAT tiene 2 PERFILES.</li>
-                 <li><strong>PERFIL crea LISTAFAVORITOS (1 a *):</strong> Un PERFIL puede crear múltiples LISTAFAVORITOS.</li>
+                 <li><strong>ACTOR publica OFERTA (1 a 0..*):</strong> Cualquier actor registrado puede compartir ofertas externas.</li>
+                 <li><strong>ACTOR comenta COMENTARIO (1 a 0..*):</strong> Los actores generan comentarios.</li>
+                 <li><strong>OFERTA tiene COMENTARIO (1 a 0..*):</strong> Los comentarios están vinculados a una oferta específica.</li>
+                 <li><strong>USUARIO escribe MENSAJE (1 a 0..*):</strong> Los usuarios envían mensajes (chat/soporte).</li>
+                 <li><strong>USUARIO publica PRODUCTO (1 a 0..*):</strong> Los usuarios ponen a la venta sus propios productos.</li>
+                 <li><strong>USUARIO realiza COMPRA (1 a 0..*):</strong> Un usuario puede realizar múltiples compras.</li>
+                 <li><strong>COMPRA pertenece a PRODUCTO (0..* a 1):</strong> Una compra se refiere a un producto específico.</li>
+                 <li><strong>EMPRESA realiza CONTRATO (1 a 0..*):</strong> Las empresas firman contratos de publicidad.</li>
              </ul>
-             <h4>2. Relaciones de Contenido y sus Auxiliares:</h4>
+
+             <h4>Enumeraciones (Enums)</h4>
              <ul>
-                <li><strong>Herencia de CONTENIDOPUBLICABLE:</strong> ANUNCIO y OFERTAUSUARIO son tipos de CONTENIDOPUBLICABLE.</li>
-                <li><strong>ANUNCIO tiene IMAGEN (1 a *):</strong> Un ANUNCIO puede tener múltiples IMAGEN.</li>
-                <li><strong>ANUNCIO pertenece a CATEGORIA (1 a 1):</strong> Cada ANUNCIO está en una CATEGORIA.</li>
-                <li><strong>OFERTAUSUARIO pertenece a CATEGORIA (1 a 1):</strong> Cada OFERTAUSUARIO está en una CATEGORIA.</li>
-                <li><strong>OFERTA_ADMINISTRADOR tiene TIPO_OFERTA_ADMIN (1 a 1):</strong> Cada oferta admin tiene un tipo.</li>
-             </ul>
-              <h4>3. Relaciones de Interacción con Contenido:</h4>
-             <ul>
-                <li><strong>COMENTARIO sobre CONTENIDOPUBLICABLE (1 a 1):</strong> Cada COMENTARIO se refiere a un contenido.</li>
-                <li><strong>LIKE a CONTENIDOPUBLICABLE (1 a 1):</strong> Cada LIKE se refiere a un contenido.</li>
-                <li><strong>LISTAFAVORITOS contiene CONTENIDOPUBLICABLE (* a *):</strong> Una lista puede tener muchos contenidos; un contenido puede estar en muchas listas.</li>
-             </ul>
-              <h4>4. Relaciones de Comunicación:</h4>
-             <ul>
-                <li><strong>CHAT contiene MENSAJE (1 a *):</strong> Un CHAT agrupa múltiples MENSAJE.</li>
-                <li><strong>MENSAJE enviado por PERFIL (* a 1):</strong> Cada MENSAJE tiene un autor (PERFIL).</li>
+                 <li><strong>TIPOCONTRATO:</strong> BANNER, PUBLICACION.</li>
+                 <li><strong>ESTADOCOMPRA:</strong> ACEPTADO, PENDIENTE, RECHAZADO.</li>
+                 <li><strong>ESTADOPRODUCTO:</strong> DISPONIBLE, RESERVADO, VENDIDO.</li>
              </ul>
         </div>
 
-        <!-- Contenedor del diagrama -->
         <div class="uml-diagram-container">
-            <!-- Título del esquema gráfico con estilos -->
             <h2 id="esquema-uml" class="uml-diagram-title styled-title">Esquema Gráfico - Clic para ampliar</h2><br>
-            <!-- La imagen del diagrama -->
             <img src="../assets/UML.png" alt="Diagrama de Clases UML de Nexus" class="plantuml-diagram-image" id="umlImage">
         </div>
     </main>
 
-    <!-- Modal para el Zoom de la Imagen -->
     <div id="imageZoomModal" class="image-zoom-modal">
         <span class="close-button" id="closeModalButton">&times;</span>
         <img class="modal-content" id="zoomedImage">
@@ -253,11 +207,6 @@
         </div>
     </footer>
 
-    <!-- Scripts -->
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script> -->
-    <!-- <script src="animations.js"></script> --> <!-- Usando animaciones CSS -->
-
-    <!-- Script para el Modal de Zoom (Actualizado con tres niveles) -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const modal = document.getElementById("imageZoomModal");
@@ -266,22 +215,19 @@
             const captionText = document.getElementById("caption");
             const closeModalButton = document.getElementById("closeModalButton");
 
-            let zoomLevel = 0; // 0: initial modal, 1: zoomed-further, 2: zoomed-even-further
+            let zoomLevel = 0; 
 
             if (img && modal && modalImg && captionText && closeModalButton) {
-                // Abrir modal al hacer clic en la imagen original
                 img.onclick = function(){
-                    modal.style.display = "flex"; // Usar flex para centrar
+                    modal.style.display = "flex"; 
                     modalImg.src = this.src;
                     captionText.innerHTML = this.alt;
-                    // Resetear zoom al abrir
                     modalImg.classList.remove('zoomed-further');
                     modalImg.classList.remove('zoomed-even-further');
                     zoomLevel = 0;
                     document.body.style.overflow = "hidden";
                 }
 
-                // Cerrar modal
                 const closeModal = () => {
                     modal.style.display = "none";
                     document.body.style.overflow = "auto";
@@ -289,16 +235,14 @@
 
                 closeModalButton.onclick = closeModal;
 
-                // Cerrar al hacer clic fuera de la imagen (en el fondo del modal)
                  modal.addEventListener('click', function(event) {
-                    if (event.target === modal) { // Solo si se hace clic en el fondo
+                    if (event.target === modal) { 
                         closeModal();
                     }
                 });
 
-                 // Ciclar por los niveles de zoom al hacer clic en la imagen dentro del modal
                  modalImg.onclick = function(event) {
-                     event.stopPropagation(); // Evitar que el clic en la imagen cierre el modal
+                     event.stopPropagation(); 
                      if (zoomLevel === 0) {
                          this.classList.add('zoomed-further');
                          zoomLevel = 1;
@@ -306,24 +250,19 @@
                          this.classList.remove('zoomed-further');
                          this.classList.add('zoomed-even-further');
                          zoomLevel = 2;
-                     } else { // zoomLevel === 2
+                     } else { 
                          this.classList.remove('zoomed-even-further');
-                         zoomLevel = 0; // Volver al estado contenido inicial
+                         zoomLevel = 0; 
                      }
                  }
 
-
-                // Cerrar con Escape
                 document.addEventListener('keydown', function(event) {
                     if (event.key === 'Escape' && modal.style.display === 'flex') {
                         closeModal();
                     }
                 });
-            } else {
-                console.error("No se encontraron todos los elementos para el modal de zoom.");
             }
         });
     </script>
 </body>
 </html>
-
