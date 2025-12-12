@@ -1,801 +1,279 @@
-/* --- MEJORA VISUAL: Importar la fuente 'Inter' --- */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap');
+/* --- NEXUS MASTER STYLESHEET: ULTIMATE DARK EDITION (FIXED) --- */
+/* Designed for: MoreInfo, Documentation Pages & Legal Sections */
 
-/* --- Estilos Generales --- */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+    /* --- PALETA DE IDENTIDAD --- */
+    --nexus-blue: #A8C7FA;
+    --nexus-purple: #C6A7FC;
+    --nexus-pink: #F48FB1;
+    
+    /* --- SUPERFICIES --- */
+    --bg-deep: #020202;         /* Fondo base */
+    --bg-subtle: #080808;       /* Fondo secundario */
+    --bg-card: rgba(255, 255, 255, 0.03); 
+    --bg-card-hover: rgba(255, 255, 255, 0.06);
+    --bg-input: #0F0F0F;
+    
+    /* --- BORDES --- */
+    --border-dim: rgba(255, 255, 255, 0.08);
+    --border-light: rgba(255, 255, 255, 0.15);
+
+    /* --- TEXTO --- */
+    --text-primary: #FFFFFF;
+    --text-secondary: #A0A0A0; 
+    --text-tertiary: #666666;
+    
+    /* --- VARIABLES --- */
+    --container-width: 900px;
+    --radius-sm: 8px;
+    --radius-md: 16px;
+}
+
+/* 1. RESET Y BASE */
 * {
-    box-sizing: border-box; 
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
 }
 
 body {
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
-    margin: 0;
-    font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    background-color: #111111;
-    color: #E0E0E0;
-    line-height: 1.6;
-    cursor: text;
-    
-    background-image: radial-gradient(circle at 20% 20%, rgba(168, 199, 250, 0.1) 0%, rgba(168, 199, 250, 0) 25%),
-                      radial-gradient(circle at 80% 70%, rgba(198, 167, 252, 0.1) 0%, rgba(198, 167, 252, 0) 25%);
-    background-size: 200% 200%;
-    animation: animated-gradient 20s ease-in-out infinite;
-}
-
-/* --- MEJORA VISUAL: Scrollbar personalizado --- */
-::-webkit-scrollbar { width: 8px; height: 8px; }
-::-webkit-scrollbar-track { background: #2a2a2a; border-radius: 10px; }
-::-webkit-scrollbar-thumb { background: #555; border-radius: 10px; }
-::-webkit-scrollbar-thumb:hover { background: #A8C7FA; }
-
-/* Cursor personalizado para elementos interactivos */
-a, button, input[type="submit"], input[type="button"], select,
-.menu-button,
-.back-button,
-.close-button
-{
-    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><circle cx="10" cy="10" r="5" fill="%23A8C7FA" opacity="0.8"/><path d="M10 0 L12 8 L8 8 Z" fill="%23A8C7FA"/></svg>') 10 0, pointer !important;
-}
-
-main {
-    flex-grow: 1;
-    /* --- MEJORA MÁRGENES MÓVIL (CORREGIDO) --- */
-    padding: 1rem 2rem; /* Padding lateral en móvil (CORREGIDO) */
-    width: 100%; 
-}
-
-@media (min-width: 768px) {
-    main {
-        padding: 2rem; /* Padding en escritorio */
-    }
-}
-
-/* --- Estilos PÁGINA DE MENÚ --- */
-.menu-container {
-    text-align: center;
-    max-width: 900px;
-    width: 100%;
-    margin: 0 auto;
-}
-.menu-container h1 {
-    font-size: clamp(2.2rem, 6vw, 2.8rem); 
-    margin-bottom: 0.8rem;
-    background: linear-gradient(135deg, #A8C7FA, #C6A7FC);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    border-bottom: none;
-    padding-bottom: 0;
-    opacity: 0;
-    animation: pop-in-bouncy 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards 0.1s;
-}
-.menu-subtitle {
-    color: #B0B0B0;
-    margin-bottom: 3rem;
-    font-size: clamp(1rem, 4vw, 1.2rem); 
-    opacity: 0;
-    animation: pop-in-bouncy 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards 0.2s;
-}
-.menu-options {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-    width: 100%;
-    margin: 0 auto 3rem auto;
-}
-@media (min-width: 768px) { 
-    .menu-options {
-        grid-template-columns: repeat(2, 1fr);
-    }
-    
-    .menu-button-full-width {
-        grid-column: 1 / -1; 
-        text-align: center; 
-    }
-    
-    .menu-button-full-width:hover {
-        border-color: #C6A7FC;
-    }
-
-    .menu-button-full-width h2 {
-        /* Corrección de error de padding-right que estaba aquí */
-        background: linear-gradient(135deg, #A8C7FA, #C6A7FC);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        display: inline-block;
-    }
-}
-
-.menu-button h2 { margin: 0 0 0.5rem 0; font-size: 1.5rem; }
-.menu-button p { margin: 0; color: #B0B0B0; }
-.menu-options a:nth-child(1) { animation-delay: 0.3s; }
-.menu-options a:nth-child(2) { animation-delay: 0.4s; }
-.menu-options a:nth-child(3) { animation-delay: 0.5s; }
-.menu-options a:nth-child(4) { animation-delay: 0.6s; }
-.menu-options a:nth-child(5) { animation-delay: 0.7s; }
-
-
-
-/* --- Estilos PÁGINAS DE DOCUMENTACIÓN (General) --- */
-.content-wrapper { 
-    max-width: 800px; 
-    margin: 0 auto; 
-    padding-top: 0; 
-    width: 100%; 
-}
-
-/* Gradiente animado en títulos */
-.content-wrapper h1, .content-wrapper h2, .content-wrapper h3,
-.section-title 
-{
-    background: linear-gradient(135deg, #A8C7FA, #C6A7FC, #A8C7FA);
-    background-size: 200% auto; 
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.15); 
-    padding-bottom: 0.6rem;
-    margin-top: 3.5rem;
-    margin-bottom: 1.8rem;
-    font-weight: 700;
-    opacity: 0; 
-    animation: pop-in-bouncy 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards,
-               gradient-flow 8s linear infinite; 
-    word-break: break-word; 
-}
-
-.content-wrapper h1 { text-align: center; font-size: clamp(2.2rem, 7vw, 3rem); width: 100%; margin-top: 0; animation-delay: 0.2s; }
-.content-wrapper h2 { font-size: clamp(1.8rem, 6vw, 2.2rem); animation-delay: 0.3s; }
-.content-wrapper h3 { font-size: clamp(1.6rem, 5vw, 1.8rem); animation-delay: 0.4s; }
-
-.section-title {
-    font-size: clamp(1.8rem, 6vw, 2rem);
-    text-align: center;
-    margin-top: 4rem; 
-    margin-bottom: 2rem; 
-    animation-delay: 0.3s;
-}
-
-.content-wrapper p, .content-wrapper li { color: #B0B0B0; margin-bottom: 1rem; word-break: break-word; }
-.content-wrapper ul { padding-left: 25px; list-style: disc; margin-bottom: 1.5rem; }
-.content-wrapper li { margin-bottom: 0.5rem; }
-
-/* --- MEJORA VISUAL: Gradiente en <strong> --- */
-.content-wrapper strong { 
-    font-weight: 600; 
-    background: linear-gradient(135deg, #A8C7FA, #C6A7FC);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-.content-wrapper code, .content-wrapper em { 
-    color: #8be9fd; 
-    font-style: normal; 
-    font-family: 'Courier New', Courier, monospace; 
-    background-color: rgba(58, 58, 58, 0.7); 
-    padding: 0.2em 0.5em; 
-    border-radius: 4px; 
-    font-size: 0.9em; 
-}
-
-/* Índice (Estilos base) */
-.toc { 
-    border-radius: 12px; 
-    padding: 1.5rem; 
-    margin-bottom: 4rem; 
-    margin-top: 1.5rem; 
-    opacity: 0; 
-    animation: pop-in-bouncy 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards 0.25s; 
-    transition: border-color 0.3s ease; 
-}
-@media (min-width: 768px) {
-    .toc { padding: 2.5rem; }
-}
-.toc-title { font-size: 2.2rem; font-weight: 700; text-align: center; margin: 0 0 1.5rem 0; padding-bottom: 1rem; background: linear-gradient(135deg, #A8C7FA, #C6A7FC); -webkit-background-clip: text; -webkit-text-fill-color: transparent; border-bottom: 2px solid; border-image: linear-gradient(to right, #A8C7FA, #C6A7FC) 1; border-image-slice: 1; }
-.toc-list { list-style: none; padding: 0; margin: 0; }
-.toc-item { margin-bottom: 1.2rem; padding-left: 15px; border-left: 3px solid transparent; transition: all 0.3s ease; }
-.toc-item:hover { border-left: 3px solid #A8C7FA; padding-left: 20px; background-color: rgba(255, 255, 255, 0.05); border-radius: 4px; }
-.toc-subitem { margin-left: 20px; margin-bottom: 0.8rem; padding-left: 10px; } 
-.toc-subitem:hover { padding-left: 15px; }
-.toc-link { color: #B0B0B0; text-decoration: none; font-size: 1.1rem; display: block; transition: color 0.3s ease; word-break: break-word; }
-.toc-item:hover .toc-link { color: #fff; }
-
-.project-meta { text-align: center; color: #999; margin-top: -10px; font-size: 0.9rem; }
-
-/* --- MEJORA VISUAL: Gradiente en <hr> --- */
-hr { 
-    border: none; 
-    height: 2px;
-    background-image: linear-gradient(to right, rgba(168, 199, 250, 0), rgba(168, 199, 250, 0.5), rgba(168, 199, 250, 0));
-    margin: 4rem 0; 
-    opacity: 0.5;
-    animation: pop-in-bouncy 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards 0.7s; 
-}
-
-/* Tabla responsive (Estilos base) */
-table { 
-    width: 100%; 
-    border-collapse: collapse; 
-    margin: 2.5rem 0; 
-    display: block; 
-    overflow-x: auto; 
-    white-space: nowrap; 
-    opacity: 0; 
-    animation: pop-in-bouncy 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards 0.5s; 
-    border-radius: 12px;
-}
-th, td { 
-    padding: 14px; 
-    text-align: left; 
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1); 
-    white-space: normal; 
-}
-th:first-child, td:first-child { padding-left: 1.5rem; }
-th:last-child, td:last-child { padding-right: 1.5rem; border-right: none; }
-tr:last-child td { border-bottom: none; }
-th { color: #A8C7FA; font-size: 1.1rem; }
-
-/* Botón "Volver" (Estilos base) */
-.back-button { 
-    font-family: inherit; 
-    color: #A8C7FA; 
-    text-decoration: none; 
-    font-weight: 500; 
-    display: inline-block; 
-    margin-bottom: 1rem; 
-    margin-top: 1.5rem; 
-    opacity: 0; 
-    animation: pop-in-bouncy 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards 0.1s; 
-    padding: 0.5rem 1rem;
-    border-radius: 50px;
-    transition: all 0.3s ease; 
-}
-.back-button:hover { 
-    color: #fff; 
-    transform: scale(1.05); 
-    background-color: rgba(168, 199, 250, 0.2);
-    border-color: rgba(168, 199, 250, 0.5);
-}
-
-/* --- Estilos Formulario --- */
-.contact-form { margin-top: 2rem; display: flex; flex-direction: column; gap: 1.5rem; text-align: left; opacity: 0; animation: pop-in-bouncy 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards 0.8s; }
-.form-intro { text-align: center; color: #B0B0B0; margin-bottom: 1.5rem; }
-.form-group { display: flex; flex-direction: column; }
-.contact-form label { margin-bottom: 0.5rem; color: #B0B0B0; }
-
-/* Inputs (Estilos base) */
-.contact-form input, .contact-form textarea { 
-    border-radius: 8px; 
-    padding: 12px; 
-    color: #E0E0E0; 
-    font-size: 1rem; 
-    transition: border-color 0.3s ease, box-shadow 0.3s ease; 
-    max-width: 100%; 
-}
-.contact-form input:focus, .contact-form textarea:focus { 
-    outline: none; 
-    border-color: #A8C7FA; 
-    box-shadow: 0 0 10px rgba(168, 199, 250, 0.3); 
-}
-.contact-form textarea { resize: vertical; }
-.send-message-button {
-    margin-top: 1.5rem;
-    padding: 14px 32px;
-    
-    /* Fondo "Glass" oscuro */
-    background-color: rgba(42, 42, 42, 0.6);
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
-    
-    /* Borde inicial oscuro y sutil */
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    
-    /* Texto inicial tenue */
-    color: #B0B0B0;
-    
-    border-radius: 50px;
-    text-decoration: none;
-    font-weight: 600; /* Un peso más "fino" */
-    font-size: 1rem;
-    cursor: pointer;
-    align-self: center;
-    position: relative;
-    overflow: hidden;
-    
-    /* ¡Quitamos la animación de brillo! */
-    /* animation: pulse-glow ... (eliminada) */
-    
-    /* Sombra de "profundidad" glass, no de 3D */
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    
-    /* Transiciones suaves para el nuevo efecto */
-    transition: color 0.4s ease, 
-                border-color 0.4s ease, 
-                box-shadow 0.4s ease, 
-                transform 0.3s ease;
-}
-
-.send-message-button span {
-    z-index: 1;
-    position: relative;
-    display: inline-block;
-    /* Transición para el color del texto */
-    transition: color 0.4s ease;
-}
-
-/* Efecto al pasar el ratón (Hover) */
-.send-message-button:hover {
-    /* El borde se ilumina con el color de la marca */
-    border-color: rgba(168, 199, 250, 0.7);
-    
-    /* El texto se ilumina */
-    color: #E0E0E0;
-    
-    /* La sombra se vuelve del color de la marca */
-    box-shadow: 0 4px 20px rgba(168, 199, 250, 0.25);
-    
-    /* Ligero "lift" */
-    transform: translateY(-2px);
-}
-
-/* Efecto al hacer clic (Active) */
-.send-message-button:active {
-    /* Se "hunde" ligeramente */
-    transform: translateY(1px);
-    /* La sombra desaparece para el efecto "press" */
-    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
-    /* Fondo un poco más oscuro al presionar */
-    background-color: rgba(30, 30, 30, 0.7);
-}
-
-/* Footer (Estilos base) */
-/* Footer (Estilos base con borde animado) */
-.advanced-footer { 
-    width: 95%;
-    max-width: 1000px;
-    margin: 2rem auto 1rem auto; 
-    flex-shrink: 0; 
-    text-align: center; 
-    color: #E0E0E0; 
-
-    /* --- Estilo de Borde Animado (Copiado de index.html) --- */
-    position: relative;
-    z-index: 2;
-    border: none;
-    border-radius: 12px; 
-    overflow: hidden;
-    
-    /* El grosor del borde */
-    padding: 2px; 
-    
-    /* El gradiente animado (el tuyo) */
-    background: linear-gradient(
-        5deg,
-        rgba(58, 58, 59, 0.8),
-        rgba(31, 30, 30, 0.8),
-        rgba(17, 18, 18, 0.8)
-    );
-    background-size: 200% 200%;
-    animation: animated-gradient 6s linear infinite;
-    
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-}
-/* Relleno interior "Glass" para el footer avanzado */
-.advanced-footer::before {
-    content: '';
-    position: absolute;
-    z-index: 0; /* Detrás del contenido */
-    top: 2px;
-    left: 2px;
-    right: 2px;
-    bottom: 2px;
-    
-    /* Fondo Glass (basado en el original de glassmorphism.css) */
-    background-color: rgba(17, 17, 17, 0.85); /* Un poco más opaco */
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    
-    border-radius: 10px; /* Borde interior */
-}
-
-@media (min-width: 768px) {
-    .advanced-footer { 
-        padding: 2.5rem 2rem 1rem; 
-        width: 95%; 
-    }
-}
-.footer-grid-container { display: grid; grid-template-columns: 1fr; gap: 2rem; max-width: 1000px; margin: 0 auto 2rem auto; text-align: center; }
-@media (min-width: 768px) { .footer-grid-container { grid-template-columns: 2fr 1fr 1fr; text-align: left; } }
-.footer-section h3 { background: linear-gradient(135deg, #A8C7FA, #C6A7FC); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-size: 1.3rem; margin-bottom: 1rem; text-align: center; }
-@media (min-width: 768px) { .footer-section h3 { text-align: left; } .footer-section.footer-brand h3 { text-align: left; } }
-.footer-section.footer-brand h3 { font-size: 2rem; margin-bottom: 0.5rem; }
-.footer-section.footer-brand p { color: #B0B0B0; font-size: 0.9rem; margin: 0; text-align: center; }
-@media (min-width: 768px) { .footer-section.footer-brand p { text-align: left; } }
-.footer-section ul { list-style: none; padding: 0; margin: 0; }
-.footer-section ul li a { color: #B0B0B0; text-decoration: none; font-size: 0.9rem; margin-bottom: 0.5rem; display: block; transition: color 0.3s ease, transform 0.3s ease; }
-.footer-section ul li a:hover { color: #A8C7FA; transform: translateX(5px); } 
-.footer-section.footer-social .social-icons { display: flex; justify-content: center; gap: 1.5rem; margin-top: 1rem; }
-@media (min-width: 768px) { .footer-section.footer-social .social-icons { justify-content: flex-start; } }
-.social-icons a { color: #888; transition: color 0.3s ease, transform 0.3s ease; }
-.social-icons .si { font-size: 24px; }
-.social-icons a:hover { color: #A8C7FA; transform: translateY(-3px) scale(1.1); } 
-.footer-bottom { 
-    border-top: 1px solid rgba(255, 255, 255, 0.1); 
-    padding-top: 1rem; 
-    margin-top: 2rem; 
-    font-size: 0.8rem; 
-    color: #666; 
-}
-
-
-/* --- Animaciones CSS --- */
-@keyframes fadeInPage { from { opacity: 0; } to { opacity: 1; } }
-@keyframes pop-in-bouncy { 0% { opacity: 0; transform: scale(0.8) translateY(20px); } 100% { opacity: 1; transform: scale(1) translateY(0); } }
-@keyframes rotate-gradient { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-@keyframes gradient-flow { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
-@keyframes animated-gradient { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
-@keyframes pulse-glow { 0% { box-shadow: 0 4px 15px rgba(168, 199, 250, 0.3); } 50% { box-shadow: 0 4px 25px rgba(198, 167, 252, 0.5); } 100% { box-shadow: 0 4px 15px rgba(168, 199, 250, 0.3); } }
-/* Modifica esta regla existente */
-.footer-grid-container { 
-    display: grid; 
-    grid-template-columns: 1fr; 
-    gap: 2rem; 
-    max-width: 1000px; 
-    margin: 0 auto; /* Quitamos el margin-bottom */
-    text-align: center; 
-    
-    /* --- NUEVO --- */
-    position: relative;
-    z-index: 1; /* Encima del ::before */
-    padding: 2.5rem 1rem 0; /* Padding original (sin bottom) */
-}
-
-/* Modifica esta regla existente */
-.footer-bottom { 
-    border-top: 1px solid rgba(255, 255, 255, 0.1); 
-    padding-top: 1rem; 
-    margin-top: 2rem; 
-    font-size: 0.8rem; 
-    color: #666; 
-    
-    /* --- NUEVO --- */
-    position: relative;
-    z-index: 1; /* Encima del ::before */
-    padding-bottom: 1rem; /* Padding original (solo bottom) */
-    /* Añadimos padding lateral que perdimos */
-    padding-left: 1rem;
-    padding-right: 1rem;
-}
-
-/* Modifica el @media query para los paddings */
-@media (min-width: 768px) { 
-    .footer-grid-container { 
-        grid-template-columns: 2fr 1fr 1fr; 
-        text-align: left; 
-        padding: 2.5rem 2rem 0; /* Padding ajustado */
-    } 
-    .footer-section h3 { text-align: left; }
-    .footer-section.footer-brand h3 { text-align: left; }
-    .footer-section.footer-brand p { text-align: left; } 
-    .footer-section.footer-social .social-icons { justify-content: flex-start; } 
-    .footer-bottom {
-         padding-left: 2rem; /* Padding ajustado */
-         padding-right: 2rem; /* Padding ajustado */
-    }
-}
-/* --- Media Queries (Sección Responsive) --- */
-@media (max-width: 767px) {
-    body { font-size: 0.95rem; }
-    
-    /* El padding de 'main' (1rem 2rem) ya maneja los márgenes en móvil */
-    
-    .content-wrapper h1 { font-size: 2.2rem; }
-    .content-wrapper h2 { font-size: 1.8rem; }
-    .content-wrapper h3 { font-size: 1.6rem; }
-    
-    .section-title { font-size: 1.8rem; margin-top: 2.5rem; }
-    .project-meta { font-size: 0.8rem; }
-    .toc { padding: 1.5rem; margin-bottom: 2rem; width: 100%; }
-    .toc-title { font-size: 1.8rem; margin-bottom: 1rem; padding-bottom: 0.8rem; }
-    .toc-item { margin-bottom: 0.8rem; padding-left: 10px; }
-    .toc-item:hover { padding-left: 15px; }
-    .toc-link { font-size: 1rem; }
-    .toc-subitem { margin-left: 15px; }
-    .menu-container h1 { font-size: 2.2rem; margin-bottom: 0.5rem; }
-    .menu-subtitle { font-size: 1rem; margin-bottom: 2rem; }
-    .menu-options { gap: 1rem; margin-bottom: 2rem; }
-    .menu-button { padding: 1rem; }
-    .menu-button h2 { font-size: 1.3rem; }
-    .menu-button p { font-size: 0.9rem; }
-    
-    .menu-button-full-width { text-align: left; }
-    .menu-button-full-width h2 { background: none; -webkit-background-clip: unset; -webkit-text-fill-color: unset; display: block; }
-
-    .back-button { margin-top: 1rem; font-size: 0.9rem; }
-    hr { margin: 2rem 0; }
-    th, td { padding: 10px; } 
-    .contact-form { gap: 1rem; width: 100%; }
-    .contact-form label { font-size: 0.9rem; }
-    .contact-form input, .contact-form textarea { padding: 10px; font-size: 0.9rem; }
-    .send-message-button { padding: 12px 24px; font-size: 0.9rem; }
-    .footer-grid-container { gap: 1rem; margin-bottom: 1rem; }
-    .footer-section h3 { font-size: 1.1rem; margin-bottom: 0.8rem; }
-    .footer-section.footer-brand h3 { font-size: 1.6rem; }
-    .footer-section.footer-brand p { font-size: 0.8rem; }
-    .footer-section ul li a { font-size: 0.8rem; }
-    .footer-section.footer-social .social-icons { gap: 1rem; }
-    .social-icons .si { font-size: 20px; }
-    .footer-bottom { padding-top: 0.8rem; margin-top: 1rem; font-size: 0.75rem; }
-
-    /* Esta regla estaba duplicada, la he dejado pero la que está al final es la que funciona */
-    .highlight-tag {
-        top: 0.75rem;
-        right: 0.75rem;
-        padding: 3px 8px;
-        font-size: 0.7rem;
-    }
-}
-
-/* Media Query específica para iPhone SE / pequeños */
-@media (max-width: 375px) {
-    body { font-size: 0.9rem; }
-    /* El padding de 'main' (1rem 2rem) ya gestiona esto */
-    
-    .content-wrapper h1 { font-size: 2rem; }
-    .content-wrapper h2 { font-size: 1.6rem; }
-    .section-title { font-size: 1.6rem; }
-    .menu-container h1 { font-size: 2rem; }
-    .menu-subtitle { font-size: 0.9rem; }
-    .menu-button h2 { font-size: 1.2rem; }
-    .menu-button p { font-size: 0.8rem; }
-}
-
-/* --- Estilos para Elementos Destacados (moreinfo.html) --- */
-
-/* Contenedor del elemento de menú con etiqueta */
-.menu-item-with-tag {
-    position: relative;
-    display: flex; /* Para alinear el enlace y la etiqueta */
-    align-items: center; /* Centrado vertical */
-    justify-content: space-between; /* Espacio entre el enlace y la etiqueta */
-    width: 100%; /* Ocupa el ancho completo */
-    padding-right: 15px; /* Para que la etiqueta no quede pegada al borde */
-}
-
-/* Estilo de la estrellita dentro del enlace */
-.highlight-star {
-    color: #FFD700; /* Dorado brillante */
-    margin-right: 8px;
-    font-size: 0.9em;
-    transform: scale(0.9); /* Un poco más pequeña */
-    transition: transform 0.2s ease;
-}
-
-/* Efecto al pasar el ratón sobre el enlace */
-.menu-item-with-tag a:hover .highlight-star {
-    transform: scale(1.1) rotate(10deg); /* Se agranda y rota ligeramente */
-}
-
-/* Etiqueta "Destacado" */
-.highlight-tag {
-    background: linear-gradient(90deg, #A8C7FA, #C6A7FC); /* Gradiente de la marca */
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    text-fill-color: transparent;
-    font-size: 0.75rem; /* Más pequeño */
-    font-weight: 700;
-    padding: 3px 8px;
-    border: 1px solid; /* Borde con el color del gradiente */
-    border-image: linear-gradient(90deg, #A8C7FA, #C6A7FC) 1; /* El borde también es un gradiente */
-    border-radius: 20px;
-    display: flex; /* Para alinear texto y estrellita */
-    align-items: center;
-    gap: 4px; /* Espacio entre "Destacado" y la estrellita */
-    opacity: 0.8; /* Ligeramente transparente */
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-
-/* Estrellita dentro de la etiqueta "Destacado" */
-.highlight-tag-star {
-    font-size: 0.6em; /* Más pequeña aún */
-    color: #FFD700; /* Dorado */
-}
-
-/* --- Estilos para Botón Destacado (moreinfo.html) --- */
-
-/* Clase para el <a> que contiene la etiqueta */
-.menu-button-highlighted {
-    position: relative; /* Contenedor para la etiqueta */
-    overflow: hidden; /* Asegura que la etiqueta no se salga */
-}
-
-/* Estrella dentro del <h2> (la de la izquierda) */
-.highlight-star {
-    color: #FFD700; /* Dorado */
-    margin-right: 8px;
-    font-size: 0.9em;
-    /* Animación sutil de brillo */
-    animation: sparkle-subtle 1.8s ease-in-out infinite alternate;
-}
-
-/* La Etiqueta "Destacado" (la de la derecha) */
-.highlight-tag {
-    position: absolute; /* La clave para posicionarla */
-    top: 1.25rem;      /* Margen superior */
-    right: 1.5rem;     /* Margen derecho */
-    
-    font-size: 0.75rem;
-    font-weight: 700;
-    color: #E0E0E0; /* Texto brillante */
-    
-    /* Fondo "Glass" */
-    background-color: rgba(42, 42, 42, 0.7);
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
-    
-    padding: 4px 10px;   /* Margen interior */
-    border-radius: 50px; /* Bordes redondeados */
-    border: 1px solid rgba(168, 199, 250, 0.5); /* Borde color marca */
-    
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-    
-    /* Animación de entrada */
-    opacity: 0;
-    transform: translateY(-10px);
-    animation: pop-in-tag 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards 0.5s;
-}
-
-/* Estrella dentro de la etiqueta */
-.highlight-tag-star-inner {
-    color: #FFD700;
-    font-size: 0.8em;
-}
-
-/* Animaciones */
-@keyframes sparkle-subtle {
-  from { opacity: 0.6; }
-  to { opacity: 1; }
-}
-
-@keyframes pop-in-tag {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes pop-in-tag {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* --- NUEVO: Banner de Descripción (moreinfo.html) --- */
-.nexus-description-banner {
-    width: 100%; /* Ocupa el ancho del .menu-container */
-    padding: 1.5rem 2rem;
-    margin: 2rem 0 3rem 0; /* Espacio arriba y abajo */
-    
-    /* Fondo sutil (casi transparente, pero no glass) */
-    background-color: rgba(30, 30, 30, 0.5); 
-    
-    /* El borde izquierdo es la clave */
-    border-left: 5px solid;
-    border-image: linear-gradient(180deg, #A8C7FA, #C6A7FC) 1; /* Gradiente vertical en el borde */
-    border-image-slice: 1;
-    
-    border-radius: 0 8px 8px 0; /* Redondeo solo en la derecha, para que el borde izquierdo sea nítido */
-    
-    /* Animación de entrada (reutilizada de las tuyas) */
-    opacity: 0;
-    animation: pop-in-bouncy 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards 0.2s;
-    
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.nexus-description-banner:hover {
-    transform: translateX(5px); /* Sutil movimiento al pasar el ratón */
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3); /* Sombra suave */
-}
-
-.nexus-description-banner h2 {
-    /* Anulamos los estilos de h1, h2 (gradiente, borde) */
-    background: linear-gradient(135deg, #A8C7FA, #C6A7FC);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    border: none;
-    padding: 0;
-    margin: 0 0 0.75rem 0;
-    font-size: 1.5rem;
-    text-align: left;
-    animation: none; /* Quitamos la animación de flujo de gradiente */
-    /* Aseguramos que la opacidad sea 1 (por si acaso) */
-    opacity: 1; 
-}
-
-.nexus-description-banner p {
-    margin: 0;
-    color: #E0E0E0; /* Texto más brillante que el B0B0B0 normal */
-    font-size: 1.1rem;
+    min-height: 100vh; /* Ocupa toda la altura */
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background-color: var(--bg-deep);
+    color: var(--text-primary);
     line-height: 1.7;
-    text-align: left;
+    
+    /* Fondo ambiental sutil */
+    background-image: radial-gradient(circle at 50% 0%, #111111 0%, var(--bg-deep) 80%);
+    background-attachment: fixed;
 }
 
+/* Scrollbar */
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: var(--bg-deep); border-left: 1px solid var(--border-dim); }
+::-webkit-scrollbar-thumb { background: #333; border-radius: 5px; border: 2px solid var(--bg-deep); }
+::-webkit-scrollbar-thumb:hover { background: #555; }
 
-/* === INICIO DE CORRECCIÓN RESPONSIVE PARA ETIQUETA === */
+/* Cursores */
+body, input, textarea { cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="%23A8C7FA" stroke-width="1.5"><circle cx="12" cy="12" r="6" stroke-opacity="0.8"/></svg>') 12 12, auto; }
+a, button, input[type="submit"], .menu-button { cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="%23A8C7FA" stroke="none"><circle cx="12" cy="12" r="4"/></svg>') 12 12, pointer !important; }
 
-@media (max-width: 767px) {
-  
-  /* 1. Mueve la etiqueta "Destacado" para alinearla con el padding de 1rem del botón en móvil */
-  .highlight-tag {
-    top: 1rem;
-    right: 1rem;
-    font-size: 0.7rem;
-    padding: 3px 8px;
-  }
 
-  /* 2. Añade padding al H2 para que el texto no se ponga debajo de la etiqueta */
-  .menu-button-full-width h2 {
-    padding-right: 90px; /* Espacio para la etiqueta "Destacado" */
-  }
-  
+/* 2. LAYOUT PRINCIPAL */
+main {
+    flex: 1; /* Empuja el footer al final */
+    width: 100%;
+    max-width: var(--container-width);
+    margin: 0 auto;
+    padding: 3rem 2rem;
+    position: relative;
+    z-index: 1;
+}
+@media (max-width: 768px) { main { padding: 2rem 1.5rem; } }
+
+
+/* 3. TIPOGRAFÍA */
+h1 {
+    font-size: clamp(2.5rem, 5vw, 3.5rem);
+    margin-top: 1rem; margin-bottom: 0.5rem;
+    background: linear-gradient(135deg, #FFF 30%, var(--nexus-blue) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 700;
+}
+h2 {
+    font-size: 1.8rem;
+    margin-top: 3rem;
+    padding-bottom: 0.8rem;
+    border-bottom: 1px solid var(--border-dim);
+    color: var(--text-primary);
+}
+h3 { font-size: 1.4rem; margin-top: 2rem; color: var(--nexus-blue); }
+.menu-subtitle { font-size: 1.1rem; color: var(--text-secondary); margin-bottom: 3rem; }
+.project-meta { font-family: monospace; font-size: 0.9rem; color: var(--text-tertiary); }
+hr { border: 0; height: 1px; background: var(--border-dim); margin: 4rem 0; }
+
+
+/* 4. COMPONENTES UI */
+.back-button {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 10px 20px; margin-bottom: 2rem;
+    border-radius: 50px; background: rgba(255,255,255,0.05);
+    border: 1px solid var(--border-dim); color: var(--text-secondary);
+    text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: all 0.3s;
+}
+.back-button:hover { background: rgba(255,255,255,0.1); color: var(--text-primary); border-color: var(--border-light); }
+
+/* Menú Grid */
+.menu-options { display: grid; grid-template-columns: 1fr; gap: 1.5rem; width: 100%; }
+@media (min-width: 768px) { 
+    .menu-options { grid-template-columns: 1fr 1fr; } 
+    .menu-button-full-width { grid-column: 1 / -1; }
 }
 
-/* === INICIO DE ESTILOS PARA NOTIFICACIÓN DE FORMULARIO === */
+.menu-button {
+    background: var(--bg-card); border: 1px solid var(--border-dim);
+    border-radius: var(--radius-md); padding: 2rem;
+    text-decoration: none; transition: all 0.3s;
+    display: flex; flex-direction: column; justify-content: center; position: relative;
+}
+.menu-button:hover { transform: translateY(-4px); background: var(--bg-card-hover); border-color: var(--border-light); }
+.menu-button h2 { font-size: 1.4rem; margin: 0 0 0.8rem 0; padding: 0; border: none; background: none; -webkit-text-fill-color: initial; color: var(--text-primary); }
+.menu-button:hover h2 { color: var(--nexus-blue); }
+.menu-button p { font-size: 1rem; color: var(--text-secondary); margin: 0; }
 
-#notification-container {
-    position: fixed;
-    top: 1.5rem;
-    right: 1.5rem;
-    z-index: 9999;
+.menu-button-highlighted { background: linear-gradient(145deg, rgba(255,255,255,0.02), rgba(168, 199, 250, 0.04)); border-color: rgba(168, 199, 250, 0.15); }
+.menu-button-highlighted:hover { border-color: var(--nexus-blue); box-shadow: 0 0 25px rgba(168, 199, 250, 0.1); }
+.highlight-tag { position: absolute; top: 1.2rem; right: 1.2rem; background: rgba(168, 199, 250, 0.1); color: var(--nexus-blue); font-size: 0.75rem; font-weight: 700; padding: 6px 12px; border-radius: 20px; border: 1px solid rgba(168, 199, 250, 0.2); text-transform: uppercase; }
+
+.nexus-description-banner { background: rgba(198, 167, 252, 0.05); border-left: 4px solid var(--nexus-purple); padding: 1.5rem 2rem; margin-bottom: 3rem; border-radius: 0 var(--radius-sm) var(--radius-sm) 0; }
+.nexus-description-banner h2 { font-size: 1.4rem; color: var(--nexus-purple); margin: 0; border: none; padding: 0; }
+.nexus-description-banner p { color: var(--text-secondary); margin: 0; }
+
+/* Documentación */
+.content-wrapper p { margin-bottom: 1.5rem; color: #B0B0B0; }
+.content-wrapper ul { padding-left: 1.5rem; color: #B0B0B0; margin-bottom: 1.5rem; }
+.content-wrapper li { margin-bottom: 0.8rem; }
+.content-wrapper a { color: var(--nexus-blue); text-decoration: none; }
+.content-wrapper a:hover { text-decoration: underline; }
+.toc { background: var(--bg-card); border: 1px solid var(--border-dim); border-radius: var(--radius-md); padding: 2rem; margin: 2.5rem 0; }
+.toc-title { font-size: 1rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text-tertiary); margin: 0 0 1rem 0; border: none; }
+.toc-link { color: var(--nexus-blue); text-decoration: none; display: block; padding: 4px 0; }
+.toc-link:hover { opacity: 0.8; }
+.toc-subitem { margin-left: 1.5rem; font-size: 0.95rem; border-left: 1px solid var(--border-dim); padding-left: 1rem; }
+
+/* Tablas */
+table { width: 100%; border-collapse: separate; border-spacing: 0; margin: 2.5rem 0; background: var(--bg-card); border: 1px solid var(--border-dim); border-radius: var(--radius-sm); overflow: hidden; }
+th, td { padding: 1rem 1.5rem; text-align: left; border-bottom: 1px solid var(--border-dim); }
+th { background: rgba(255,255,255,0.03); color: var(--nexus-blue); text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px; }
+tr:last-child td { border-bottom: none; }
+
+
+/* 5. FORMULARIO DE CONTACTO (FIXED) */
+.contact-form {
+    background: var(--bg-card);
+    padding: 2.5rem;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-dim);
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
-    overflow: hidden;
+    gap: 1.5rem;
 }
 
-.nexus-toast {
-    /* Estilo Glassmorphism (basado en .menu-button) */
-    border: 1px solid rgba(168, 199, 250, 0.5); /* Borde de marca */
-    background-color: rgba(42, 42, 42, 0.7); 
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px); 
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-    
-    color: #E0E0E0;
-    font-size: 0.9rem;
-    font-weight: 500;
-    padding: 1rem 1.5rem;
-    border-radius: 12px;
-    
-    /* Animación de entrada y salida */
-    opacity: 0;
-    transform: translateX(110%);
-    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+.form-group { display: flex; flex-direction: column; gap: 0.6rem; }
+.form-group label { font-size: 0.9rem; font-weight: 600; color: var(--text-secondary); margin-left: 4px; }
+
+.contact-form input,
+.contact-form textarea {
+    width: 100%;
+    padding: 16px;
+    background: var(--bg-input);
+    border: 1px solid var(--border-dim);
+    border-radius: var(--radius-sm);
+    color: var(--text-primary);
+    font-family: inherit;
+    font-size: 1rem;
+    transition: all 0.3s;
 }
 
-.nexus-toast.show {
-    opacity: 1;
-    transform: translateX(0);
+/* FIX: EVITAR QUE EL TEXTAREA SE ROMPA */
+.contact-form textarea {
+    resize: vertical; /* Solo permite cambiar altura, no anchura */
+    min-height: 120px; /* Altura mínima segura */
+    max-height: 400px; /* Altura máxima para no romper layout */
 }
 
-/* Estilo para notificaciones de error */
-.nexus-toast.error {
-    border-color: rgba(255, 100, 100, 0.7);
-    color: #FFDADA;
+.contact-form input:focus,
+.contact-form textarea:focus {
+    outline: none;
+    border-color: var(--nexus-blue);
+    box-shadow: 0 0 0 3px rgba(168, 199, 250, 0.1);
+    background: #151515;
 }
 
-/* === FIN DE ESTILOS PARA NOTIFICACIÓN === */
+.send-message-button {
+    align-self: flex-start;
+    background: var(--nexus-blue);
+    color: #000;
+    font-weight: 700;
+    padding: 16px 32px;
+    border: none;
+    border-radius: 50px;
+    font-size: 1rem;
+    display: flex; align-items: center; gap: 10px;
+    transition: all 0.3s;
+}
+.send-message-button:hover { transform: translateY(-2px); box-shadow: 0 5px 20px rgba(168, 199, 250, 0.4); background: #FFF; }
+
+
+/* 6. FOOTER (FIXED & LEGAL INCLUDED) */
+.advanced-footer {
+    width: 100%;
+    border-top: 1px solid var(--border-dim);
+    background: #000; /* Fondo negro sólido para separar visualmente */
+    padding: 4rem 2rem 2rem;
+    margin-top: auto; /* Sticky footer */
+    flex-shrink: 0;
+}
+
+.footer-grid-container {
+    max-width: var(--container-width);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    text-align: center;
+}
+
+@media (min-width: 768px) {
+    .footer-grid-container {
+        grid-template-columns: 2fr 1fr 1fr; /* Estructura 2-1-1 */
+        text-align: left;
+    }
+}
+
+.footer-brand h3 {
+    font-size: 1.8rem; margin: 0 0 0.5rem 0; border: none;
+    background: linear-gradient(90deg, #FFF, var(--nexus-purple));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.footer-brand p { font-size: 0.95rem; color: var(--text-tertiary); margin: 0; }
+
+.footer-links h3, .footer-social h3 {
+    font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px;
+    color: var(--text-secondary); margin: 0 0 1.5rem 0; border: none;
+}
+
+.footer-links ul { list-style: none; padding: 0; margin: 0; }
+.footer-links li { margin-bottom: 0.8rem; }
+.footer-links a {
+    color: var(--text-tertiary); text-decoration: none; transition: color 0.2s; font-size: 0.95rem; display: block;
+}
+.footer-links a:hover { color: var(--nexus-blue); }
+
+.social-icons { display: flex; gap: 1.2rem; justify-content: center; }
+@media (min-width: 768px) { .social-icons { justify-content: flex-start; } }
+
+.social-icons a { color: var(--text-tertiary); font-size: 1.4rem; transition: all 0.3s; }
+.social-icons a:hover { color: var(--text-primary); transform: translateY(-3px); }
+
+.footer-bottom {
+    max-width: var(--container-width);
+    margin: 3rem auto 0;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-dim);
+    text-align: center;
+    font-size: 0.85rem;
+    color: #444;
+}
+
+/* Toast */
+#notification-container { position: fixed; top: 20px; right: 20px; z-index: 9999; display: flex; flex-direction: column; gap: 10px; }
+.nexus-toast { background: rgba(30, 30, 30, 0.9); backdrop-filter: blur(10px); border: 1px solid var(--border-light); color: #FFF; padding: 16px 24px; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); font-size: 0.95rem; font-weight: 500; transform: translateX(120%); transition: transform 0.4s; }
+.nexus-toast.show { transform: translateX(0); }
+.nexus-toast.error { border-color: #ff6b6b; color: #ffcccc; }

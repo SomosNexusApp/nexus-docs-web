@@ -5,178 +5,126 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nexus - Diagrama UML</title>
     <meta name="description" content="Diagrama de clases UML que muestra la arquitectura y relaciones principales de la aplicación Nexus.">
+    
     <link rel="icon" type="image/png" href="../assets/logo.png">
+    
     <link rel="stylesheet" href="../styles/styles.css">
-    <link rel="stylesheet" href="../styles/glassmorphism.css">
     <link rel="stylesheet" href="../styles/uml-styles.css">
+    
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simple-icons-font@v13/font/simple-icons.min.css">
-
-    <meta property="og:title" content="Nexus - Diagrama UML">
-    <meta property="og:description" content="Diagrama de clases UML de la arquitectura de Nexus.">
-    <meta property="og:image" content="https://nexus-app.es/assets/logo.png">
-    <meta property="og:url" content="https://nexus-app.es/document-uml.html">
-    <meta property="og:type" content="article">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
 
     <main class="uml-page-wrapper">
         <div class="uml-header-content">
-            <a href="../moreinfo.html" class="back-button">&larr; Volver al menú</a>
+            <a href="../moreinfo.html" class="back-button">
+                <i class="fa-solid fa-arrow-left"></i> Volver al menú
+            </a>
             <h1>Diagrama UML</h1>
         </div>
 
         <div class="uml-documentation">
-             <nav class="toc">
-                <h2 class="toc-title">Índice</h2>
-                <ul class="toc-list">
-                    <li class="toc-item"><a href="#introduccion-uml" class="toc-link">Introducción</a></li>
-                    <li class="toc-item"><a href="#actores-principales" class="toc-link">1. Actores y Usuarios</a></li>
-                    <li class="toc-item toc-subitem"><a href="#clase-actor" class="toc-link">Clase Base: Actor</a></li>
-                    <li class="toc-item toc-subitem"><a href="#subclases-actor" class="toc-link">Subclases: Usuario, Empresa, Admin</a></li>
-                    <li class="toc-item"><a href="#gestion-comercial" class="toc-link">2. Gestión Comercial</a></li>
-                    <li class="toc-item toc-subitem"><a href="#productos-ofertas" class="toc-link">Productos y Ofertas</a></li>
-                    <li class="toc-item toc-subitem"><a href="#compras-contratos" class="toc-link">Compras y Contratos</a></li>
-                    <li class="toc-item"><a href="#interaccion" class="toc-link">3. Interacción y Mensajería</a></li>
-                    <li class="toc-item"><a href="#relaciones" class="toc-link">Relaciones entre Clases</a></li>
-                     <li class="toc-item"><a href="#esquema-uml" class="toc-link">Esquema Gráfico</a></li>
-                </ul>
-            </nav>
+            <h3>Introducción al Modelo de Datos</h3>
+            <p>Este documento refleja la arquitectura orientada a objetos de Nexus. El sistema se basa en una clase padre <code>ACTOR</code> de la que heredan los distintos roles, y separa claramente la lógica de productos físicos (Segunda Mano) de las ofertas digitales.</p>
 
-            <h3 id="introduccion-uml">Introducción al Modelo de Datos de Nexus</h3>
-            <p>Este documento refleja la estructura de datos actualizada de Nexus. El modelo se centra en una arquitectura de herencia donde todos los participantes del sistema derivan de una clase común <code>Actor</code>, permitiendo una gestión unificada de credenciales mientras se especializan los roles en <code>Usuario</code>, <code>Empresa</code> y <code>Admin</code>. El sistema gestiona tanto la venta directa de productos de segunda mano como la publicación de ofertas externas y contratos publicitarios.</p>
-
-            <h3 id="actores-principales">1. Actores y Usuarios</h3>
+            <h3>1. Estructura de Actores</h3>
             
-            <h4 id="clase-actor">ACTOR (Clase Base)</h4>
-            <p><strong>Propósito:</strong> Clase padre que engloba los atributos comunes para cualquier entidad que acceda al sistema.</p>
+            <h4>Clase Base: ACTOR</h4>
+            <p>Entidad principal que gestiona la autenticación y los datos comunes.</p>
             <ul>
-                <li><strong>id: Integer:</strong> Identificador único del actor.</li>
-                <li><strong>user: String:</strong> Nombre de usuario o alias.</li>
-                <li><strong>email: String:</strong> Correo electrónico para autenticación y contacto.</li>
-                <li><strong>password: String:</strong> Contraseña de acceso cifrada.</li>
-                <li><strong>fechaRegistro: DateTime:</strong> Fecha de alta en el sistema.</li>
-                <li><strong>rol: TiposRol:</strong> Define si es Admin, Usuario o Empresa.</li>
-            </ul>
-            <p><strong>Métodos:</strong> <code>registrarse(datos)</code>, <code>iniciarSesion(credenciales)</code>, <code>editarPerfil(datos)</code>.</p>
-
-            <h4 id="subclases-actor">Subclases de Actor</h4>
-            
-            <h5>USUARIO (Extiende de Actor)</h5>
-            <p><strong>Propósito:</strong> Representa al usuario particular estándar que interactúa en la plataforma comprando, vendiendo o comentando.</p>
-            <ul>
-                <li><strong>telefono: String:</strong> Número de contacto.</li>
-                <li><strong>esVerificado: Boolean:</strong> Indica si el perfil ha validado su identidad.</li>
-                <li><strong>fotoPerfil: String (URL):</strong> Imagen del usuario.</li>
-                <li><strong>biografia: String:</strong> Descripción personal.</li>
-                <li><strong>ubicacion: String:</strong> Localización geográfica.</li>
-                <li><strong>reputacion: Integer:</strong> Valoración numérica basada en su actividad.</li>
+                <li><strong>id:</strong> (Integer) Identificador único.</li>
+                <li><strong>user:</strong> (String) Nombre de usuario.</li>
+                <li><strong>email:</strong> (String) Correo electrónico.</li>
+                <li><strong>password:</strong> (String) Contraseña cifrada.</li>
+                <li><strong>fechaRegistro:</strong> (DateTime) Fecha de alta.</li>
+                <li><strong>rol:</strong> (tiposRol) Discriminador de permisos.</li>
+                <li><em>Métodos:</em> <code>registrarse(datos)</code>, <code>iniciarSesion(credenciales)</code>, <code>editarPerfil(datos)</code>.</li>
             </ul>
 
-            <h5>EMPRESA (Extiende de Actor)</h5>
-            <p><strong>Propósito:</strong> Entidad corporativa que utiliza Nexus para establecer contratos publicitarios.</p>
+            <h4>Subclases (Herencia)</h4>
             <ul>
-                <li><strong>cif: String:</strong> Código de Identificación Fiscal único.</li>
+                <li><strong>ADMIN:</strong> Posee el atributo <code>nivelAcceso</code> (Integer) para gestión del sistema.</li>
+                <li><strong>EMPRESA:</strong> Identificada por su <code>cif</code> (String) para gestiones fiscales y contratos.</li>
+                <li><strong>USUARIO:</strong> El usuario estándar de la plataforma. Atributos extendidos:
+                    <ul>
+                        <li><code>telefono</code> (String), <code>esVerificado</code> (Boolean)</li>
+                        <li><code>fotoPerfil</code> (String URL), <code>biografia</code> (String)</li>
+                        <li><code>ubicacion</code> (String), <code>reputacion</code> (Integer)</li>
+                    </ul>
+                </li>
             </ul>
 
-            <h5>ADMIN (Extiende de Actor)</h5>
-            <p><strong>Propósito:</strong> Administrador del sistema con permisos elevados.</p>
+            <h3>2. Productos y Mercado</h3>
+
+            <h4>PRODUCTO (Segunda Mano)</h4>
+            <p>Artículos físicos gestionados directamente por los usuarios.</p>
             <ul>
-                <li><strong>nivelAcceso: Integer:</strong> Grado de privilegios dentro del panel de administración.</li>
+                <li><strong>Atributos:</strong> <code>id</code>, <code>titulo</code>, <code>descripcion</code>, <code>precio</code>, <code>tipoOferta</code>.</li>
+                <li><strong>Estado:</strong> <code>estadoProducto</code> (Enum).</li>
+                <li><strong>Métodos:</strong> <code>publicar()</code>, <code>eliminar()</code>.</li>
+                <li><em>Relación:</em> Publicado por 1 Usuario. Puede tener N Mensajes (Chat).</li>
             </ul>
 
-            <h3 id="gestion-comercial">2. Gestión Comercial y Contenido</h3>
-
-            <h4 id="productos-ofertas">Productos y Ofertas</h4>
-
-            <h5>PRODUCTO</h5>
-            <p><strong>Propósito:</strong> Artículo físico puesto a la venta dentro de la plataforma (generalmente segunda mano).</p>
+            <h4>OFERTA (Digital/Externa)</h4>
+            <p>Promociones de productos nuevos publicadas por cualquier Actor.</p>
             <ul>
-                <li><strong>id: Integer:</strong> Identificador único del producto.</li>
-                <li><strong>titulo: String:</strong> Nombre del producto.</li>
-                <li><strong>descripcion: String:</strong> Detalles del artículo.</li>
-                <li><strong>precio: Double:</strong> Coste del producto.</li>
-                <li><strong>tipoOferta: TipoOferta:</strong> Categorización de la oferta.</li>
-                <li><strong>estadoProducto: EstadoProducto (Enum):</strong> Condición actual (<code>DISPONIBLE</code>, <code>RESERVADO</code>, <code>VENDIDO</code>).</li>
-            </ul>
-            <p><strong>Métodos:</strong> <code>publicar()</code>, <code>eliminar()</code>.</p>
-
-            <h5>OFERTA</h5>
-            <p><strong>Propósito:</strong> Promoción o enlace a un producto externo (ofertas de internet).</p>
-            <ul>
-                <li><strong>urlOferta: String:</strong> Enlace externo a la oferta.</li>
-                <li><strong>tienda: String:</strong> Nombre del comercio (ej. Amazon, PcComponentes).</li>
-                <li><strong>precioOferta: Double:</strong> Precio rebajado.</li>
-                <li><strong>precioOriginal: Double (opcional):</strong> Precio anterior para comparar.</li>
-                <li><strong>fechaExpiracion: DateTime (opcional):</strong> Cuándo caduca la oferta.</li>
+                <li><strong>Atributos:</strong> <code>urlOferta</code>, <code>tienda</code>, <code>precioOferta</code>.</li>
+                <li><strong>Opcionales:</strong> <code>precioOriginal</code>, <code>fechaExpiracion</code>.</li>
+                <li><em>Relación:</em> Publicada por Actor (1:N). Tiene Comentarios (1:N).</li>
             </ul>
 
-            <h4 id="compras-contratos">Compras y Contratos</h4>
+            <h3>3. Transacciones y Contratos</h3>
 
-            <h5>COMPRA</h5>
-            <p><strong>Propósito:</strong> Registro de una transacción realizada por un Usuario sobre un Producto.</p>
+            <h4>COMPRA</h4>
+            <p>Registro de la adquisición de un Producto de segunda mano.</p>
             <ul>
-                <li><strong>precioFinal: Double:</strong> Precio al que se cerró la transacción.</li>
-                <li><strong>fechaCompra: Date:</strong> Fecha de la operación.</li>
-                <li><strong>estadoCompra: EstadoCompra (Enum):</strong> Situación de la transacción (<code>ACEPTADO</code>, <code>PENDIENTE</code>, <code>RECHAZADO</code>).</li>
+                <li><strong>Datos:</strong> <code>precioFinal</code> (Double), <code>fechaCompra</code> (Date).</li>
+                <li><strong>Estado:</strong> <code>estadoCompra</code> (Enum).</li>
+                <li><em>Relación:</em> Realizada por 1 Usuario sobre 1 Producto.</li>
             </ul>
 
-            <h5>CONTRATO</h5>
-            <p><strong>Propósito:</strong> Acuerdo comercial entre una Empresa y Nexus.</p>
+            <h4>CONTRATO</h4>
+            <p>Acuerdos comerciales entre Nexus y una Empresa.</p>
             <ul>
-                <li><strong>id: Integer:</strong> Identificador del contrato.</li>
-                <li><strong>tipoContrato: TipoContrato (Enum):</strong> Modalidad del servicio (<code>BANNER</code>, <code>PUBLICACION</code>).</li>
+                <li><strong>Datos:</strong> <code>id</code>, <code>tipoContrato</code>.</li>
+                <li><em>Relación:</em> Vinculado a 1 Empresa.</li>
             </ul>
 
-            <h3 id="interaccion">3. Interacción y Mensajería</h3>
+            <h3>4. Interacción Social</h3>
 
-            <h5>MENSAJE</h5>
-            <p><strong>Propósito:</strong> Comunicación directa escrita por un Usuario.</p>
+            <h4>MENSAJE (Chat)</h4>
             <ul>
-                <li><strong>id: Integer:</strong> Identificador del mensaje.</li>
-                <li><strong>fechaCreacion: DateTime:</strong> Marca de tiempo del envío.</li>
-                <li><strong>estaActivo: Boolean:</strong> Estado de visibilidad del mensaje.</li>
+                <li><strong>Datos:</strong> <code>id</code>, <code>fechaCreacion</code>, <code>estaActivo</code>.</li>
+                <li><em>Relación:</em> Escrito por Usuario (1:N). Pertenece a un Producto (contexto de venta).</li>
             </ul>
 
-            <h5>COMENTARIO</h5>
-            <p><strong>Propósito:</strong> Opiniones o preguntas públicas realizadas sobre Ofertas.</p>
+            <h4>COMENTARIO</h4>
             <ul>
-                <li><strong>id: Integer:</strong> Identificador del comentario.</li>
-                <li><strong>texto: String:</strong> Contenido del comentario.</li>
-                <li><strong>fecha: DateTime:</strong> Fecha de publicación.</li>
-                <li><strong>esReportado: Boolean:</strong> Flag de moderación.</li>
+                <li><strong>Datos:</strong> <code>id</code>, <code>texto</code>, <code>fecha</code>, <code>esReportado</code>.</li>
+                <li><strong>Métodos:</strong> <code>reportar()</code>.</li>
+                <li><em>Relación:</em> Realizado por Actor sobre una Oferta.</li>
             </ul>
-            <p><strong>Métodos:</strong> <code>reportar()</code>.</p>
 
-            <h3 id="relaciones">Relaciones entre Clases (Asociaciones)</h3>
-             <p>Las conexiones principales definidas en el diagrama son:</p>
-             <ul>
-                 <li><strong>ACTOR publica OFERTA (1 a 0..*):</strong> Cualquier actor registrado puede compartir ofertas externas.</li>
-                 <li><strong>ACTOR comenta COMENTARIO (1 a 0..*):</strong> Los actores generan comentarios.</li>
-                 <li><strong>OFERTA tiene COMENTARIO (1 a 0..*):</strong> Los comentarios están vinculados a una oferta específica.</li>
-                 <li><strong>USUARIO escribe MENSAJE (1 a 0..*):</strong> Los usuarios envían mensajes (chat/soporte).</li>
-                 <li><strong>USUARIO publica PRODUCTO (1 a 0..*):</strong> Los usuarios ponen a la venta sus propios productos.</li>
-                 <li><strong>USUARIO realiza COMPRA (1 a 0..*):</strong> Un usuario puede realizar múltiples compras.</li>
-                 <li><strong>COMPRA pertenece a PRODUCTO (0..* a 1):</strong> Una compra se refiere a un producto específico.</li>
-                 <li><strong>EMPRESA realiza CONTRATO (1 a 0..*):</strong> Las empresas firman contratos de publicidad.</li>
-             </ul>
-
-             <h4>Enumeraciones (Enums)</h4>
-             <ul>
-                 <li><strong>TIPOCONTRATO:</strong> BANNER, PUBLICACION.</li>
-                 <li><strong>ESTADOCOMPRA:</strong> ACEPTADO, PENDIENTE, RECHAZADO.</li>
-                 <li><strong>ESTADOPRODUCTO:</strong> DISPONIBLE, RESERVADO, VENDIDO.</li>
-             </ul>
+            <h3>5. Enumeraciones (Enums)</h3>
+            <p>Valores predefinidos para controlar los estados del sistema:</p>
+            <ul>
+                <li><strong>ENUM ESTADOPRODUCTO:</strong> <code>DISPONIBLE</code>, <code>RESERVADO</code>, <code>VENDIDO</code>.</li>
+                <li><strong>ENUM ESTADOCOMPRA:</strong> <code>ACEPTADO</code>, <code>PENDIENTE</code>, <code>RECHAZADO</code>.</li>
+                <li><strong>ENUM TIPOCONTRATO:</strong> <code>BANNER</code>, <code>PUBLICACION</code>.</li>
+            </ul>
         </div>
 
         <div class="uml-diagram-container">
-            <h2 id="esquema-uml" class="uml-diagram-title styled-title">Esquema Gráfico - Clic para ampliar</h2><br>
+            <h2 class="uml-diagram-title styled-title">Esquema Gráfico <small>(Clic en la imagen para ampliar)</small></h2>
+            
             <img src="../assets/UML.png" alt="Diagrama de Clases UML de Nexus" class="plantuml-diagram-image" id="umlImage">
         </div>
     </main>
 
     <div id="imageZoomModal" class="image-zoom-modal">
         <span class="close-button" id="closeModalButton">&times;</span>
-        <img class="modal-content" id="zoomedImage">
+        <img class="modal-content" id="zoomedImage" alt="Zoom Diagrama">
         <div id="caption" class="caption"></div>
     </div>
 
@@ -196,9 +144,9 @@
             <div class="footer-section footer-social">
                 <h3>Síguenos</h3>
                 <div class="social-icons">
-                    <a href="https://x.com/somosnexusapp" target="_blank" title="X (Twitter)"><i class="si si-x"></i></a>
-                    <a href="https://www.instagram.com/somosnexusapp/" target="_blank" title="Instagram"><i class="si si-instagram"></i></a>
-                    <a href="https://www.tiktok.com/@nexusapp?lang=es" target="_blank" title="TikTok"><i class="si si-tiktok"></i></a>
+                    <a href="https://x.com/somosnexusapp" target="_blank"><i class="si si-x"></i></a>
+                    <a href="https://www.instagram.com/somosnexusapp/" target="_blank"><i class="si si-instagram"></i></a>
+                    <a href="https://www.tiktok.com/@nexusapp?lang=es" target="_blank"><i class="si si-tiktok"></i></a>
                 </div>
             </div>
         </div>
@@ -207,41 +155,43 @@
         </div>
     </footer>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="../script/animations.js"></script>
+
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const modal = document.getElementById("imageZoomModal");
             const img = document.getElementById("umlImage");
             const modalImg = document.getElementById("zoomedImage");
-            const captionText = document.getElementById("caption");
             const closeModalButton = document.getElementById("closeModalButton");
 
             let zoomLevel = 0; 
 
-            if (img && modal && modalImg && captionText && closeModalButton) {
+            if (img && modal && modalImg && closeModalButton) {
+                // Abrir Modal
                 img.onclick = function(){
                     modal.style.display = "flex"; 
                     modalImg.src = this.src;
-                    captionText.innerHTML = this.alt;
-                    modalImg.classList.remove('zoomed-further');
-                    modalImg.classList.remove('zoomed-even-further');
+                    modalImg.classList.remove('zoomed-further', 'zoomed-even-further');
                     zoomLevel = 0;
-                    document.body.style.overflow = "hidden";
+                    document.body.style.overflow = "hidden"; // Bloquear scroll
                 }
 
+                // Cerrar Modal
                 const closeModal = () => {
                     modal.style.display = "none";
                     document.body.style.overflow = "auto";
                 }
 
                 closeModalButton.onclick = closeModal;
-
-                 modal.addEventListener('click', function(event) {
-                    if (event.target === modal) { 
-                        closeModal();
-                    }
+                
+                // Cerrar al hacer clic fuera de la imagen
+                modal.addEventListener('click', function(event) {
+                    if (event.target === modal) closeModal();
                 });
 
-                 modalImg.onclick = function(event) {
+                // Zoom progresivo al hacer clic en la imagen
+                modalImg.onclick = function(event) {
                      event.stopPropagation(); 
                      if (zoomLevel === 0) {
                          this.classList.add('zoomed-further');
@@ -256,10 +206,9 @@
                      }
                  }
 
+                // Cerrar con ESC
                 document.addEventListener('keydown', function(event) {
-                    if (event.key === 'Escape' && modal.style.display === 'flex') {
-                        closeModal();
-                    }
+                    if (event.key === 'Escape') closeModal();
                 });
             }
         });

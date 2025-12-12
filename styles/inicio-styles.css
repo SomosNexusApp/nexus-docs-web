@@ -1,400 +1,275 @@
-/* --- Estilos Generales y compartidos --- */
+/* --- NEXUS: PROFESSIONAL DARK UI --- */
+/* Designed for Stability, Contrast & Impact */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+    /* Identidad Nexus */
+    --color-primary: #A8C7FA;   /* Azul Hielo */
+    --color-accent: #C6A7FC;    /* Púrpura */
+    --color-highlight: #F48FB1; /* Rosa Suave */
+    
+    /* Superficies */
+    --bg-deep: #020202;         /* Negro casi absoluto */
+    --bg-surface: rgba(255, 255, 255, 0.03);
+    
+    /* Textos */
+    --text-white: #FFFFFF;
+    --text-gray: #A3A3A3;
+}
+
 * {
-    box-sizing: border-box; /* Asegura que padding y border no afecten el ancho total */
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-deep);
+    color: var(--text-white);
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
-    margin: 0;
-    font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    color: #E0E0E0;
-    line-height: 1.6;
-    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23A8C7FA"><circle cx="8" cy="8" r="4"/></svg>'), auto;
-    
-    /* --- MEJORA VISUAL: Fondo animado --- */
-    background-color: #111111;
-    background-image: radial-gradient(circle at 20% 20%, rgba(168, 199, 250, 0.1) 0%, rgba(168, 199, 250, 0) 25%),
-                      radial-gradient(circle at 80% 70%, rgba(198, 167, 252, 0.1) 0%, rgba(198, 167, 252, 0) 25%);
-    background-size: 200% 200%;
-    animation: animated-gradient 20s ease-in-out infinite;
+    overflow-x: hidden;
+    /* Fondo radial sutil para dar volumen */
+    background-image: radial-gradient(circle at 50% 30%, #0f1218 0%, #000000 70%);
 }
 
-/* --- ESTILOS PARA LA PÁGINA DE INICIO FIJA Y SIN SCROLL --- */
+/* Scroll bloqueado solo si es necesario por JS, 
+   pero por CSS dejamos que fluya si la pantalla es muy pequeña */
 body.no-scroll {
-    height: 100vh;
-    overflow: hidden; /* Esto está bien para la landing page */
+    overflow: hidden;
+}
+@media (max-height: 700px) {
+    body.no-scroll { overflow-y: auto; }
 }
 
-/* --------------------------------------------------------- */
+/* --- FONDO ESTRELLADO (Sutil) --- */
+.stars-bg {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-image: 
+        radial-gradient(1px 1px at 20px 30px, #ffffff, rgba(0,0,0,0)),
+        radial-gradient(1px 1px at 40px 70px, #ffffff, rgba(0,0,0,0)),
+        radial-gradient(1.5px 1.5px at 50px 160px, #ffffff, rgba(0,0,0,0)),
+        radial-gradient(1.5px 1.5px at 90px 40px, #ffffff, rgba(0,0,0,0));
+    background-size: 200px 200px;
+    opacity: 0.15;
+    pointer-events: none;
+    z-index: 0;
+}
 
+/* --- LAYOUT FLEXIBLE (Arregla el bug del footer) --- */
 main {
-    flex-grow: 1;
+    flex: 1; /* Ocupa todo el espacio disponible */
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 1rem 2rem; /* Añadido padding para móviles (CORREGIDO) */
+    padding: 2rem;
+    position: relative;
+    z-index: 1;
+    width: 100%;
 }
 
-/* --- Estilos para la Página de Inicio (index.html) --- */
 .slogan-container {
+    width: 100%;
+    max-width: 800px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
     text-align: center;
-    padding: 1rem; /* Ajustado para móviles */
-    width: 100%; /* Asegura que no se desborde */
 }
 
-.slogan-container h1 {
-    font-size: clamp(3rem, 10vw, 6rem);
-    font-weight: 700;
-    margin: 0;
-    background: linear-gradient(135deg, #A8C7FA, #C6A7FC);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    word-break: break-word; /* Evita desbordamiento en palabras largas */
+/* --- LOGO & LUZ --- */
+.logo-wrapper {
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1.5rem;
 }
 
-.slogan-container p {
-    font-size: clamp(1.2rem, 4vw, 2rem);
+/* La luz detrás del logo */
+.logo-glow {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60%;
+    height: 60%;
+    background: radial-gradient(circle, rgba(168, 199, 250, 0.3), rgba(198, 167, 252, 0.1) 60%, transparent 80%);
+    filter: blur(40px);
+    z-index: -1;
+    animation: pulse-light 4s infinite alternate ease-in-out;
+}
+
+.nexus-logo-img {
+    width: 100%;
+    max-width: 500px; /* Tamaño controlado */
+    height: auto;
+    object-fit: contain;
+    /* Animación de entrada */
+    opacity: 0;
+    transform: translateY(10px);
+    animation: fade-in-up 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+    /* Sombra sutil para despegarlo del fondo */
+    filter: drop-shadow(0 4px 12px rgba(0,0,0,0.5));
+}
+
+.subtitle {
+    font-size: 1.25rem;
+    color: var(--text-gray);
     font-weight: 300;
-    margin: 0.5rem 0 0;
-    color: #B0B0B0;
+    margin-bottom: 3.5rem;
+    opacity: 0;
+    animation: fade-in 0.8s ease forwards 0.3s;
 }
 
-/* Contenedor para los botones */
+/* --- BOTONES (Glass Style) --- */
 .buttons-container {
     display: flex;
-    flex-direction: column; /* Cambiado a columna para móviles */
-    justify-content: center;
-    align-items: center;
-    gap: 1.5rem; /* Espacio entre botones */
-    margin-top: 3.5rem; /* Espacio desde el párrafo */
+    flex-direction: column;
+    gap: 1.2rem;
     width: 100%;
+    align-items: center;
+    opacity: 0;
+    animation: fade-in-up 0.8s ease forwards 0.5s;
 }
 
-/* Media query para pantallas más grandes (tablets y escritorio) */
 @media (min-width: 768px) {
     .buttons-container {
-        flex-direction: row; /* Vuelve a fila en escritorio */
+        flex-direction: row;
+        justify-content: center;
+        gap: 2rem;
     }
 }
 
-.info-button, .demo-button {
-    padding: 12px 24px;
-    background-color: rgba(255, 255, 255, 0.1);
-    color: #E0E0E0;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 50px;
+.btn {
     text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 16px 32px;
+    border-radius: 12px;
     font-weight: 500;
-    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23A8C7FA"><circle cx="8" cy="8" r="4"/></svg>'), auto;
-    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    font-size: 1rem;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    width: 100%;
+    max-width: 280px;
     position: relative;
     overflow: hidden;
-    width: 100%; /* Ocupa el ancho en móvil */
-    max-width: 320px; /* Un ancho máximo */
 }
 
-@media (min-width: 768px) {
-    .info-button, .demo-button {
-        width: auto; /* Ancho automático en escritorio */
-    }
+@media (min-width: 768px) { .btn { width: auto; min-width: 200px; } }
+
+/* Botón Primario (Ver Demo) */
+.btn-primary {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-white);
+    backdrop-filter: blur(10px);
 }
 
-
-/* Estilo principal para el botón de demo */
-.demo-button {
-    background: linear-gradient(135deg, #A8C7FA, #C6A7FC);
-    color: #1F1F1F;
-    font-weight: 700;
-    border: none;
-    box-shadow: 0 4px 15px rgba(168, 199, 250, 0.3);
-    
-    /* --- MEJORA VISUAL: Animación de brillo --- */
-    animation: pulse-glow 2.5s infinite ease-in-out;
+.btn-primary:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: var(--color-primary); /* Borde azul al hover */
+    box-shadow: 0 0 20px rgba(168, 199, 250, 0.15); /* Glow azul */
+    transform: translateY(-2px);
 }
 
-.demo-button:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 20px rgba(168, 199, 250, 0.5);
-    animation-play-state: paused; /* Pausa el brillo al pasar el ratón */
+.btn-primary i { color: var(--color-primary); }
+.btn-primary:hover i { color: #fff; }
+
+/* Botón Secundario (Docs) */
+.btn-secondary {
+    background: transparent;
+    border: 1px solid transparent;
+    color: var(--text-gray);
 }
 
-.info-button::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.15), transparent);
-    transform: skewX(-25deg);
-    animation: shimmer 5s infinite linear;
-    animation-delay: 2s; 
+.btn-secondary:hover {
+    color: var(--text-white);
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.1);
 }
 
-.info-button:hover {
-    background-color: rgba(255, 255, 255, 0.2);
-    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><circle cx="10" cy="10" r="5" fill="%23A8C7FA" opacity="0.8"/><path d="M10 0 L12 8 L8 8 Z" fill="%23A8C7FA"/></svg>') 10 0, pointer;
-    transform: translateY(-3px) scale(1.02); /* Efecto "lift" */
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-}
-
-/* --- Estilos para la sección de plataformas --- */
+/* --- PLATAFORMAS --- */
 .platforms {
-    margin-top: 3.5rem; 
+    margin-top: 5rem;
     opacity: 0;
-    animation: fadeInPlatforms 1s ease-out 1s forwards;
+    animation: fade-in 1s ease forwards 0.8s;
 }
 
 .platforms h3 {
-    color: #888;
-    font-weight: 400;
-    font-size: 1rem;
-    margin: 0 0 1.5rem 0;
-    letter-spacing: 0.5px;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #444;
+    margin-bottom: 1.5rem;
+    font-weight: 600;
 }
 
-.platforms-icons {
+.icons-grid {
     display: flex;
     justify-content: center;
-    gap: 2rem; /* Reducido el gap para móviles */
-    flex-wrap: wrap; /* Permite que los iconos bajen si no caben */
+    gap: 2.5rem;
 }
 
-@media (min-width: 768px) {
-    .platforms-icons {
-        gap: 3rem; /* Vuelve al gap original en escritorio */
-    }
+.icon-item {
+    font-size: 1.5rem;
+    color: #333;
+    transition: all 0.3s ease;
+    cursor: default;
 }
 
-.platform-icon {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.75rem;
-    color: #999;
-    transition: color 0.3s ease, transform 0.3s ease;
+.icon-item:hover {
+    color: var(--text-white);
+    transform: scale(1.1);
+    text-shadow: 0 0 10px rgba(255,255,255,0.3);
 }
 
-/* --- MEJORA VISUAL: Hover en iconos --- */
-.platform-icon:hover {
-    color: #fff;
-    transform: scale(1.1) translateY(-5px);
-}
-
-.platform-icon .si {
-    font-size: 32px; 
-}
-
-.platform-icon span {
-    font-size: 0.9rem;
-    font-weight: 500;
-}
-/* --- Estilos para el Pie de Página (Footer) --- */
+/* --- FOOTER (Estable) --- */
 footer {
-    width: calc(100% - 2rem); 
-    margin: 0 auto 1rem auto;
-    padding: 2px; /* Grosor del borde */
+    width: 100%;
+    padding: 1.5rem;
     text-align: center;
-    font-size: 0.9rem;
-    color: #B0B0B0;
-    flex-shrink: 0;
-    
-    position: relative; 
-    border-radius: 12px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    background: rgba(0,0,0,0.2);
+    font-size: 0.85rem;
+    color: #555;
     z-index: 2;
-    border: none;
-    overflow: hidden;
-    
-    /* El FOOTER es el gradiente animado */
-    background: linear-gradient(
-        5deg,
-        rgba(58, 58, 59, 0.8),
-        rgba(31, 30, 30, 0.8),
-        rgba(17, 18, 18, 0.8)
-    );
-    
-    /* Aumentamos el tamaño para que la animación se vea bien */
-    background-size: 200% 200%;
-    
-    /* !! ESTE ES EL CAMBIO CLAVE !! 
-      Cambiamos 'rotate-gradient' por 'animated-gradient'
-    */
-    animation: animated-gradient 6s linear infinite; 
-    
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-    transition: width 0.3s ease, margin 0.3s ease;
 }
 
-/* Pseudo-elemento para el fondo (EL "RELLENO" O MÁSCARA INTERIOR) 
-  Esto se pone ENCIMA del gradiente del footer.
-*/
-footer::before {
-    content: '';
-    position: absolute;
-    z-index: 0; /* Detrás del texto (p) */
-    
-    /* Se posiciona para dejar el padding de 2px del footer visible */
-    top: 2px;
-    left: 2px;
-    right: 2px;
-    bottom: 2px;
-    
-    /* Este es el fondo glassmorphism */
-    background-color: rgba(30, 30, 30, 0.85); /* Un poco más opaco */
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    
-    /* El borde interior debe ser más pequeño que el exterior */
-    border-radius: 10px; 
-}
-
-
-footer p {
-    margin: 0;
-    /* Añadimos el padding aquí para el texto, no en el footer */
-    padding: 13px 1rem; 
-    
-    /* Asegura que el texto esté por encima de todo */
-    position: relative; 
-    z-index: 1; 
-}
-
-/* Media query (sin cambios) */
-@media (min-width: 768px) {
-    footer {
-        width: 95%; 
-        max-width: 1200px;
-        margin: 0 auto 1.5rem auto;
-    }
-}
-/* --- Keyframes para animaciones --- */
-@keyframes shimmer {
-    from { left: -100%; }
-    to { left: 100%; }
-}
-
-@keyframes fadeInPlatforms {
-    from { opacity: 0; transform: translateY(10px); }
+/* --- ANIMACIONES --- */
+@keyframes fade-in-up {
+    from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* --- MEJORA VISUAL: Keyframes para fondo y brillo --- */
-@keyframes animated-gradient {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+@keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 
-@keyframes pulse-glow {
-    0% { box-shadow: 0 4px 15px rgba(168, 199, 250, 0.3); }
-    50% { box-shadow: 0 4px 25px rgba(198, 167, 252, 0.5); }
-    100% { box-shadow: 0 4px 15px rgba(168, 199, 250, 0.3); }
+@keyframes pulse-light {
+    0% { opacity: 0.5; transform: translate(-50%, -50%) scale(0.95); }
+    100% { opacity: 0.8; transform: translate(-50%, -50%) scale(1.05); }
 }
 
-/* ... (al final del todo) ... */
-
-/* BÓRRALO ENTERO */
-@keyframes rotate-gradient {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+/* --- CURSORES --- */
+body, a, button {
+    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="%23A8C7FA" stroke-width="1.5"><circle cx="12" cy="12" r="6" stroke-opacity="0.8"/></svg>') 12 12, auto;
+}
+a:hover, button:hover, .btn:hover {
+    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="%23A8C7FA" stroke="none"><circle cx="12" cy="12" r="4"/></svg>') 12 12, pointer;
 }
 
-.info-button,
-.demo-button {
-    /* Usamos flex para alinear el icono y el texto */
-    display: inline-flex;
-    align-items: center;
-    justify-content: center; /* Centra el contenido en móvil (width: 100%) */
-    gap: 0.75rem; /* Espacio entre icono y texto */
-    
-    /* Aseguramos que el ancho no se rompa */
-    box-sizing: border-box; 
-}
-
-.info-button i,
-.demo-button i {
-    /* Ajusta el tamaño del icono ligeramente */
-    font-size: 1.1em;
-    /* Evita que el icono encoja */
-    flex-shrink: 0;
-}
-
-
-/* * --- INICIO DE LA CORRECCIÓN PARA MÓVILES --- 
- * Estas reglas se aplican a pantallas pequeñas para que todo quepa mejor.
-*/
-
-/* Media query para móviles (pantallas de 480px o menos) */
+/* --- MOBILE TWEAKS --- */
 @media (max-width: 480px) {
-    .slogan-container h1 {
-        /* Reducimos el tamaño mínimo y máximo de la fuente del título */
-        font-size: clamp(3.5rem, 10vw, 4rem);
-    }
-
-    .slogan-container p {
-        /* Reducimos el tamaño de la fuente del subtítulo */
-        font-size: clamp(1.1rem, 4vw, 1.5rem);
-    }
-
-    .buttons-container {
-        /* Reducimos el margen superior de los botones */
-        margin-top: 2.5rem;
-        gap: 1rem; /* Reducimos el espacio entre botones */
-    }
-
-    .info-button, .demo-button {
-        /* Hacemos los botones un poco menos altos */
-        padding: 10px 20px;
-    }
-
-    .platforms {
-        /* Reducimos el margen superior de la sección "Próximamente" */
-        margin-top: 2.5rem;
-    }
-
-    .platforms h3 {
-        margin-bottom: 1rem;
-    }
-
-    .platforms-icons {
-        gap: 1.5rem; /* Reducimos el espacio entre iconos */
-    }
+    main { padding: 3rem 1.5rem; }
+    .nexus-logo-img { max-width: 85%; }
+    .subtitle { font-size: 1rem; margin-bottom: 2.5rem; }
+    .platforms { margin-top: 4rem; }
 }
-
-/* Media query para móviles MUY pequeños (ej. iPhone SE, 375px o menos) */
-@media (max-width: 375px) {
-    .slogan-container h1 {
-        font-size: 2.2rem; /* Tamaño fijo más pequeño */
-    }
-    .slogan-container p {
-        font-size: 1rem; /* Tamaño fijo más pequeño */
-    }
-    .buttons-container {
-        margin-top: 2rem;
-    }
-    .platforms {
-        margin-top: 2rem;
-    }
-    .platform-icon .si {
-        font-size: 28px; /* Iconos un poco más pequeños */
-    }
-}
-/* --- FIN DE LA CORRECCIÓN PARA MÓVILES --- */
-
-
-/* --- INICIO DE CORRECCIÓN FOOTER MÓVIL (Overlap) --- */
-/* (Añadido 09/11/2025) */
-@media (max-width: 767px) {
-    body.no-scroll footer {
-        /* Añade un margen inferior para que no lo tape la barra del navegador */
-        /* Usamos 1rem (del margin original) + 4.5rem extra */
-        margin-bottom: 7rem; /* <-- ¡AJUSTADO! */
-    }
-}
-/* --- FIN DE CORRECCIÓN FOOTER MÓVIL --- */
